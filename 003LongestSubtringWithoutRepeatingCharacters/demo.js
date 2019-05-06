@@ -9,15 +9,19 @@ var lengthOfLongestSubstring = function(s) {
                 j++;
                 continue;
             }else{
-                maxlength == maxlength > sub.length ? maxlength : sub.length;
-                i = sub.indexOf(s.charAt(j));
+                maxlength = maxlength > sub.length ? maxlength : sub.length;
+                i += sub.indexOf(s.charAt(j));
                 break;
             }
         };
         if(j == s.length){
-            return maxlength > j - i - 1 ? maxlength : j - i - 1;
+            return maxlength > j - i ? maxlength : j - i;
         }
         i++;
     }
     return maxlength;
 };
+console.log(lengthOfLongestSubstring('abcabcbb'));
+console.log(lengthOfLongestSubstring('bbbbb'));
+console.log(lengthOfLongestSubstring('pwwkew'));
+
