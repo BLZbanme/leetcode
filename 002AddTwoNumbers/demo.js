@@ -1,15 +1,18 @@
 var addTwoNumbers = function(l1, l2) {
-    var result = new ListNode((l1.val + l2.val) % 10);
-    var now = result;
-    var tmp = (l1.val + l2.val) >= 10 ? 1 : 0;
-    var l1pre = l1;
-    var l2pre = l2;
-    l1 = l1.next;
-    l2 = l2.next;   
+    var result;
+    var now;
+    var tmp = 0;
+    var l1pre;
+    var l2pre;
     while(l1 != null && l2 != null){
-        now.next = new ListNode((l1.val + l2.val + tmp) % 10);
+        if(result == null){
+            result = new ListNode((l1.val + l2.val + tmp) % 10);
+            now = result;
+        }else{
+            now.next = new ListNode((l1.val + l2.val + tmp) % 10);
+            now = now.next;
+        }
         tmp = (l1.val + l2.val + tmp) >= 10 ? 1 : 0;
-        now = now.next;
         l1pre = l1;
         l2pre = l2;
         l1 = l1.next;
