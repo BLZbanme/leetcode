@@ -1,5 +1,4 @@
 var myAtoi = function(str) {
-    debugger;
     var num = parseInt(str);
     if(!isNaN(num)){
         if(num >= 2147483647){
@@ -10,7 +9,6 @@ var myAtoi = function(str) {
         return num;
     }
     return 0;
-    limit 
 };
 
 console.log(myAtoi("42"));
