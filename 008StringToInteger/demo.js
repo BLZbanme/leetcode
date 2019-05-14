@@ -10,6 +10,7 @@ var myAtoi = function(str) {
         return num;
     }
     return 0;
+    limit 
 };
 
 console.log(myAtoi("42"));
@@ -17,8 +18,4 @@ console.log(myAtoi("    -42"));
 console.log(myAtoi("4193 with words"));
 console.log(myAtoi("words and 987"));
 console.log(myAtoi("-91283472332"));
-
-function trim(str){
-    return str.replace(/(^\s*)/g, "");
-}
 
