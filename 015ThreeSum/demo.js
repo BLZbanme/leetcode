@@ -70,7 +70,7 @@ console.log(threeSum([0,0,0,0]))
 console.log(threeSum([-1, 0, 1]))
 
 var threeSum = function(nums) {
-    nums.sort();
+    nums.sort((a, b) => a - b);
     const result = [];
     for(let i = 0; i < nums.length; i++){
         if ((i == 0 || (i > 0 && nums[i] != nums[i - 1])) && nums[i] <= 0) {
@@ -92,8 +92,42 @@ var threeSum = function(nums) {
     return result;
 };
 
+var threeSum = function(nums) {
+    nums.sort((a, b) => a - b);
+    const result = [];
+    for(let i = 0; i < nums.length; i++){
+        if ((i == 0 || (i > 0 && nums[i] != nums[i - 1])) && nums[i] <= 0) {
+            let tmp = nums[i];
+            let target = 0 - tmp;
+            let j = i + 1;
+            let k = nums.length - 1;
+            while(j < k){
+                let sum = nums[j] + nums[k];
+                if(sum > target){
+                    k--;
+                    continue;
+                }else if(sum < target){
+                    j++;
+                    continue;
+                }else{
+                    result.push([tmp, nums[j], nums[k]]);
+                    while(j < k && nums[j + 1] == nums[j]){
+                        j++;
+                    }
+                    while(k > j && nums[k - 1] == nums[k]){
+                        k--;
+                    }
+                    j++;
+                    k--;
+                }
+            }
+        }
+    }
+    return result;
+}
 
+
+console.log(threeSum([-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6]))
 console.log(threeSum([-1, 0, 1, 2, -1, -4]))
 console.log(threeSum([0,0,0,0]))
-
 console.log(threeSum([-1, 0, 1]))
