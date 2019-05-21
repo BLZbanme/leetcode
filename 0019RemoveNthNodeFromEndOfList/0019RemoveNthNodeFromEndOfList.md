@@ -16,7 +16,7 @@ Given *n* will always be valid.
 
 **Follow up:**
 
-Could you do this in one pass?我的解决方法	
+Could you do this in one pass?
 
 ##### 2019.05.21
 
