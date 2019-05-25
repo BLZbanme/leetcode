@@ -73,6 +73,22 @@ var strStr = function(s, p){
     }
 }
 
+function getNext(str){
+    let next = new Array(str.length);
+    let i = 0, j = -1;
+    next[0] = -1;
+    while(i < str.length - 1){
+        if(j == -1 || str[i] == str[j]){
+            ++i;
+            ++j;
+            next[i] = j;
+        }else{
+            j = next[j];
+        }
+    }
+    return next;
+}
+
 //优化后的
 function getNext(str){
     let next = new Array(str.length);
