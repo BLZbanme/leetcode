@@ -53,7 +53,6 @@ var searchRange = function(nums, target) {
 };
 
 function binarySearch(arr, v){
-    // debugger
     var low = 0;
     var high = arr.length - 1;
     while(low <= high){
@@ -70,7 +69,6 @@ function binarySearch(arr, v){
 }
 
 var searchRange = function(arr, target){
-    debugger
     let low = 0;
     let high = arr.length - 1;
     let res = [-1, -1];
