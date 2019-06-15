@@ -55,7 +55,7 @@ let arr = Array.from(heights);
 let arr = [...heights];
 ```
 
-​	3.Array.slice();
+​	3.Array.slice() || concat() ;
 
 ```javascript
 let arr = heights.slice();
