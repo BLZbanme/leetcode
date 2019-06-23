@@ -169,7 +169,7 @@ var search = function(nums, target) {
 
 ##### 别人的写法
 
-##### ​	方法1：
+##### 	方法1：
 
 ​	首先找到最小的那个值，把这个值作为逻辑上的数组起点，然后就进行2分查找
 
@@ -463,7 +463,7 @@ var isValidSudoku = function(board) {
 
 ##### 别人的方法：
 
-##### ​	方法1：
+##### 	方法1：
 
 ​	声明了3个数组，然后在两层循环里面一次完事
 
@@ -610,7 +610,7 @@ A solution set is:
 
 ##### 我的思路：
 
-##### ​	方法1：
+##### 	方法1：
 
 ​	 回溯，把target一次次分解下，如果出现target < num，说明得不到合适的组合，就返回。值得注意的是为了防止算重复，把candidates排序了，并且在每次迭代从传了遍历起始的下标
 
@@ -710,3 +710,94 @@ function find(result, arr, candidates, target, index = 0){
 ##### 题外话：
 
 ​	本来不想定义另一个方法，直接在combinationSum中迭代的，给参数赋默认值，使得第一次迭代不缺参数。但是由于此题的candidates并不是排好序的，如果每次迭代重新排序开销太大，所以声明了一个find函数。
+
+# 40.Combination Sum II
+
+Given a collection of candidate numbers (`candidates`) and a target number (`target`), find all unique combinations in `candidates` where the candidate numbers sums to `target`.
+
+Each number in `candidates` may only be used **once** in the combination.
+
+**Note:**
+
+- All numbers (including `target`) will be positive integers.
+- The solution set must not contain duplicate combinations.
+
+**Example 1:**
+
+```
+Input: candidates = [10,1,2,7,6,1,5], target = 8,
+A solution set is:
+[
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
+]
+```
+
+**Example 2:**
+
+```
+Input: candidates = [2,5,2,1,2], target = 5,
+A solution set is:
+[
+  [1,2,2],
+  [5]
+]
+```
+
+##### 2019.06.23
+
+##### 我的思路：
+
+​	跟39题一样，要注意的事移动下标去重，先排序，每个相同的数字只算第一碰到的结果，后面相同的全部跳过。
+
+```javascript
+var combinationSum2 = function(candidates, target) {
+    candidates.sort((a, b) => a - b);
+    let res = [];
+    let i = 0;
+    let l = candidates.length;
+    while(i < l){
+        let num = candidates[i];
+        if(num == target){
+            res.push([num]);
+        }else if(num < target){
+            find(candidates, target - num, i + 1, [num], res);
+        }else{
+            return res;
+        }
+        i++;
+        while(i < l && candidates[i] == candidates[i - 1]){
+            i++;
+        }
+
+    }
+    return res;
+};
+
+function find(candidates, target, index, arr, res){
+    let l = candidates.length;
+    while(index < l){
+        let num = candidates[index];
+        if(num == target){
+            res.push(cpArrAndPush(arr, num));
+            return;
+        }else if(num < target){
+            find(candidates, target - num, index + 1, cpArrAndPush(arr, num), res);
+        }else{
+            return ;
+        }
+        index++;
+        while(index < l && candidates[index] == candidates[index - 1]){
+            index++;
+        }
+    }
+}
+
+function cpArrAndPush(arr, num){
+    let newArr = [...arr];
+    newArr.push(num);
+    return newArr;
+}
+```
