@@ -1,9 +1,35 @@
-/**
- * @param {string} num1
- * @param {string} num2
- * @return {string}
- */
+# 43. Multiply Strings
 
+Given two non-negative integers `num1` and `num2` represented as strings, return the product of `num1` and `num2`, also represented as a string.
+
+**Example 1:**
+
+```
+Input: num1 = "2", num2 = "3"
+Output: "6"
+```
+
+**Example 2:**
+
+```
+Input: num1 = "123", num2 = "456"
+Output: "56088"
+```
+
+**Note:**
+
+1. The length of both `num1` and `num2` is < 110.
+2. Both `num1` and `num2` contain only digits `0-9`.
+3. Both `num1` and `num2` do not contain any leading zero, except the number 0 itself.
+4. You **must not use any built-in BigInteger library** or **convert the inputs to integer** directly.
+
+##### 2019.06.24
+
+##### 我的思路：
+
+​	用数组逆序存储结果（如数字123，存在数组中为[3,2,1]）,每次进位的时候递归一直算到无法进位，最后反转数组再join("")。
+
+```javascript
 var multiply = function(num1, num2) {
     if(num1 == "0" || num2 == "0"){
         return "0";
@@ -38,7 +64,13 @@ function numBitAdd(arr, i, num){
         numBitAdd(arr, i + 1, pre);
     }
 }
+```
 
+##### 借鉴别人的思路：
+
+​	我发现，进位的时候其实不需要算到无法进位为止，只需要把上一位赋值了，因为如果还有进位的话，算到上一位判断是否进位时会处理掉
+
+```javascript
 var multiply = function(num1, num2) {
     if(num1 == "0" || num2 == "0"){
         return "0";
@@ -69,7 +101,13 @@ function numBitAdd(arr, i, num){
     }
     arr[i + 1] += parseInt(sum / 10);
 }
+```
 
+##### 别人的思路：
+
+​	直接声明了固定大小的数组，然后全部填充为0，这就减少了我写的中（！arr[i]）判断数组项是否初始化的过程，并且最后不需要逆序打印。
+
+```javascript
 var multiply = function(num1, num2) {
     if(num1 == "0" || num2 == "0"){
         return "0";
@@ -89,17 +127,5 @@ var multiply = function(num1, num2) {
     let index = res.findIndex((value) => value != 0);
     return res.slice(index).join("");
 }
+```
 
-console.log(multiply("123456789","987654321"))
-console.log(multiply("9", "99"))
-console.log(multiply("123", "456"))
-
-110711102121450369
-106705432123450369
-
-121932631112635269
-121932631112635269
-121932631112635269
-121932631112635269
-121932631112635269
- 98365432123456369
