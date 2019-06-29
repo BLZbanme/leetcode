@@ -318,6 +318,248 @@ var myPow = function(x, n){
 }
 ```
 
+# 47. Permutations II
+
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+
+**Example:**
+
+```
+Input: [1,1,2]
+Output:
+[
+  [1,1,2],
+  [1,2,1],
+  [2,1,1]
+]
+```
+
+##### 2019.06.27
+
+##### 我的思路：
+
+​	dfs,有两点要注意的：
+
+​	1.去重，每种相同的值只有遍历到第一个的时候计算可能值，后面的值都会和第一个重复。
+
+​	2.判断是否使用了某个值，在这里我疯狂的浅复制数组，并删掉使用过的那个值（重复值也只删当前用的那一个），估计内存开销会很大。
+
+​	 好久没写跟标准答案几乎一样的解了~，最高的答案最后一步声明个list，然后把map的values放到list里面，但是由于我是每次都直接把对应的数组对象放在结果list里面了，所以直接返回list就行
+
+```javascript
+var permuteUnique = function(nums) {
+    nums.sort((a, b) => a - b);
+    let res = [];
+    let i = 0;
+    while(i < nums.length){
+        if(nums.length == 1){
+            return [nums];
+        }
+        let tmpArr = [...nums];
+        tmpArr.splice(i, 1);
+        permute([nums[i]], tmpArr, res);
+        i++;
+        while(i < nums.length && nums[i] == nums[i - 1]){
+            i++;
+        }
+    }
+    return res;
+};
+
+function permute(arr, nums, res){
+    let i = 0;
+    while(i < nums.length){
+        let tmpArr = [...nums];
+        tmpArr.splice(i, 1);
+        let arrNew = [...arr];
+        arrNew.push(nums[i]);
+        if(nums.length == 1){
+            res.push(arrNew);
+            return;
+        }
+        permute(arrNew, tmpArr, res);
+        i++;
+        while(i < nums.length && nums[i] == nums[i - 1]){
+            i++;
+        }
+    }
+}
+```
+
+##### 别人的思路：
+
+##### 方法1：
+
+​	同样是dfs，这位选手的思路是用一个used数组标记使用了的值。
+
+##### 还有值得借鉴的地方是：
+
+​	我自己写的代码中，主函数里面不应该写第一次迭代的（这样代码和上面permute中重复了很多），应该把全部迭代的运算都在dfs方法里面。
+
+```javascript
+var permuteUnique = function(nums) {
+    nums.sort((a, b) => a - b);
+    let res = [];
+    let used = new Array(nums.length).fill(false);
+    let list = [];
+    dfs(nums, used, list, res);
+    return res;
+};
+
+function dfs(nums, used, list, res){
+    if(list.length == nums.length){
+        res.push([...list]);
+        return;
+    }
+
+    for(let i = 0; i < nums.length; i++){
+        if(used[i]){
+            continue;
+        }
+        if(i > 0 && nums[i - 1] == nums[i] && !used[i - 1]){
+            continue;
+        }
+        used[i] = true;
+        list.push(nums[i]);
+        dfs(nums, used, list, res);
+        used[i] = false;
+        list.pop();
+    }
+}
+```
+
+# 48. Rotate Image
+
+You are given an *n* x *n* 2D matrix representing an image.
+
+Rotate the image by 90 degrees (clockwise).
+
+**Note:**
+
+You have to rotate the image [**in-place**](https://en.wikipedia.org/wiki/In-place_algorithm), which means you have to modify the input 2D matrix directly. **DO NOT** allocate another 2D matrix and do the rotation.
+
+**Example 1:**
+
+```
+Given input matrix = 
+[
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+],
+
+rotate the input matrix in-place such that it becomes:
+[
+  [7,4,1],
+  [8,5,2],
+  [9,6,3]
+]
+```
+
+**Example 2:**
+
+```
+Given input matrix =
+[
+  [ 5, 1, 9,11],
+  [ 2, 4, 8,10],
+  [13, 3, 6, 7],
+  [15,14,12,16]
+], 
+
+rotate the input matrix in-place such that it becomes:
+[
+  [15,13, 2, 5],
+  [14, 3, 4, 1],
+  [12, 6, 8, 9],
+  [16, 7,10,11]
+]
+```
+
+##### 2019.06.29
+
+##### 我的思路：
+
+​	从最里层开始直接旋转，如果这个矩阵长度是奇数，最里层是一个点，不需要转，从此外层开始转。
+
+​	时间复杂度O(n<sup>2</sup>)
+
+```javascript
+var rotate = function(matrix) {
+    let len = matrix.length;
+    if(len == 1){
+        return matrix;
+    }
+    let index = parseInt(len / 2) - 1;
+    let nowLen = len % 2 == 0 ? 2 : 3;
+    while(nowLen <= len){
+        let tmp = new Array(nowLen);
+        for(let i = 0; i < nowLen; i++){
+            tmp[i] = matrix[index][index + i];
+        }
+        for(let i = 0; i < nowLen; i++){
+            matrix[index][index + i] = matrix[index + nowLen - 1 - i][index];
+        }
+        for(let i = 0; i < nowLen; i++){
+            matrix[index + i][index] = matrix[index + nowLen - 1][index + i];
+        }
+        for(let i = 0; i < nowLen; i++){
+            matrix[index + nowLen - 1][index + i] = matrix[index + nowLen - 1 - i][index + nowLen - 1];
+        }
+        for(let i = 0; i < nowLen; i++){
+            matrix[index + i][index + nowLen - 1] = tmp[i];
+        }
+        nowLen += 2;
+        index--;
+    }
+    return matrix;
+};
+```
+
+##### 别人的思路：
+
+​	顺时针旋转矩阵可以通过把矩阵按行颠倒，然后求转置。
+
+```
+/*
+ * clockwise rotate
+ * first reverse up to down, then swap the symmetry 
+ * 1 2 3     7 8 9     7 4 1
+ * 4 5 6  => 4 5 6  => 8 5 2
+ * 7 8 9     1 2 3     9 6 3
+*/
+```
+
+```javascript
+var rotate = function(matrix){
+    matrix.reverse();
+    for(let i = 0; i < matrix.length; i++){
+        for(let j = i + 1; j < matrix.length; j++){
+            [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+        }
+    }
+    return matrix;
+}
+```
+
+##### 注:
+
+​	逆时针旋转矩阵可以通过把矩阵按列颠倒，然后求转置
+
+```javascript
+var rotate = function(matrix){
+    for(let arr of matrix){
+        arr.reverse();
+    }
+    for(let i = 0; i < matrix.length; i++){
+        for(let j = i + 1; j < matrix.length; j++){
+            [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+        }
+    }
+    return matrix;
+}
+```
+
 # 66. Plus One
 
 Given a **non-empty** array of digits representing a non-negative integer, plus one to the integer.
@@ -454,3 +696,4 @@ var addBinary = function(a, b) {
     return tmp == 0 ? res : 1 + res;
 }
 ```
+
