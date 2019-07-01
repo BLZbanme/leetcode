@@ -1,4 +1,4 @@
-# 58. Spiral Matrix II
+# 59. Spiral Matrix II
 
 Given a positive integer *n*, generate a square matrix filled with elements from 1 to *n*2 in spiral order.
 
