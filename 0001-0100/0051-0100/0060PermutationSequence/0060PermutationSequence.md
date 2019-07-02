@@ -36,7 +36,11 @@ Output: "2314"
 
 ##### 	我的思路：
 
-##### 	方法1：
+##### 		方法1：
+
+​	写了一遍0031NextPermutation，但是由于当时可能没完全掌握，很多细节的地方没有写好，鲜血险些超时。
+
+​	复杂度O(n<sup>2</sup>logn),遍历n次复杂度O(n),每次便利里面查找和排序O(nlogn),所以为O(n<sup>2</sup>logn）
 
 ```javascript
 var getPermutation = function(n, k) {
@@ -70,6 +74,8 @@ function findNextPermutation(permutation){
 
 ##### 	方法1优化:
 
+​	用当时31题最优的思路实现，复杂度O(n<sup>2</sup>)，遍历n次复杂度O(n),每次遍历里面查找，交换，和逆序O(n)，得到O(n<sup>2</sup>)
+
 ```javascript
 var getPermutation = function(n, k) {
     let arr = new Array(n).fill(0).map((v, i) => i + 1);
@@ -101,6 +107,10 @@ function findNextPermutation(permutation){
 
 ##### 	方法2：
 
+​	瞟了眼最高亮的思路的开头，理解之后自己写的。可以根据k判断一次次/(n-1)!，判断当前这个排列的开头是什么，然后从初始化存储已经未被使用的数字数组中去掉它。
+
+​	时间复杂度O(n<sup>2</sup>)，遍历n次，每次里面要计算n次阶乘值。
+
 ```javascript
 var getPermutation = function(n, k) {
     let res = [];
@@ -125,6 +135,8 @@ function factorial(n){
 ```
 
 ##### 	方法2优化：
+
+​	最后看了下最高亮的答案，它有一个很亮眼的地方就是用一个阶乘数组存储了对应的阶乘值。这样复杂度就变成了O(n),求阶乘数组O(n),遍历n次O(n)，O(n) + O(n) 得到O(n)
 
 ```javascript
 var getPermutation = function(n, k) {
