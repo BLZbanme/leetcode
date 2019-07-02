@@ -58,6 +58,47 @@ function findNextPermutation(permutation){
     }
 }
 
+var getPermutation = function(n, k) {
+    let res = [];
+    let num = new Array(n).fill(0).map((v, i)=> i + 1);
+    while(n > 1) {
+        let fac = factorial(--n);
+        let now = Math.ceil((k / fac)) - 1;
+        res.push(num[now]);
+        num.splice(now, 1);
+        k -= fac * now;
+    }
+    res.push(num[0]);
+    return res.join("");
+}
+
+function factorial(n){
+    if(n == 1){
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+var getPermutation = function(n, k) {
+    let res = [];
+    let facArr = new Array(n);
+    facArr[0] = 1;
+    let sum = 1;
+    for(let i = 1; i < n; i++){
+        sum *= i;
+        facArr[i] = sum;
+    }
+    let num = new Array(n).fill(0).map((v, i)=> i + 1);
+    while(n > 1) {
+        let fac = facArr[--n];
+        let now = Math.ceil((k / fac)) - 1;
+        res.push(num[now]);
+        num.splice(now, 1);
+        k -= fac * now;
+    }
+    res.push(num[0]);
+    return res.join("");
+}
 
 console.log(getPermutation(1, 1))
 console.log(getPermutation(2, 1))

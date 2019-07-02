@@ -1,51 +1,151 @@
-# 59. Spiral Matrix II
+# 60. Permutation Sequence
 
-Given a positive integer *n*, generate a square matrix filled with elements from 1 to *n*2 in spiral order.
+The set `[1,2,3,...,n]` contains a total of *n*! unique permutations.
 
-**Example:**
+By listing and labeling all of the permutations in order, we get the following sequence for *n* = 3:
+
+1. `"123"`
+2. `"132"`
+3. `"213"`
+4. `"231"`
+5. `"312"`
+6. `"321"`
+
+Given *n* and *k*, return the *k*th permutation sequence.
+
+**Note:**
+
+- Given *n* will be between 1 and 9 inclusive.
+- Given *k* will be between 1 and *n*! inclusive.
+
+**Example 1:**
 
 ```
-Input: 3
-Output:
-[
- [ 1, 2, 3 ],
- [ 8, 9, 4 ],
- [ 7, 6, 5 ]
-]
+Input: n = 3, k = 3
+Output: "213"
 ```
 
-##### 2019.07.01
+**Example 2:**
+
+```
+Input: n = 4, k = 9
+Output: "2314"
+```
+
+##### 2019.07.02
 
 ##### 	我的思路：
 
-​	老规矩递归
+##### 	方法1：
 
 ```javascript
-var generateMatrix = function(n) {
-    let res = new Array(n);
-    for(let i = 0; i < n; i++){
-        res[i] = new Array(n);
+var getPermutation = function(n, k) {
+    let arr = new Array(n).fill(0).map((v, i) => i + 1);
+    while(k > 1){
+        arr = findNextPermutation(arr);
+        k--;
     }
-    circle(res, 0, n, 1);
-    return res;
+    return arr.join("");
 };
 
-function circle(res, index, width, num){
-    for(let i = 0; i < width; i++){
-        res[index][index + i] = num++;
+function findNextPermutation(permutation){
+    let index = permutation.length - 2;
+    while(index >= 0 && permutation[index] > permutation[index + 1]){
+        index--;
     }
-    for(let i = 1; i < width; i++){
-        res[index + i][index + width - 1] = num++;
+    let tmp = permutation[index];
+    let pre = permutation.slice(0, index + 1);
+    let aft = permutation.slice(index + 1);
+    aft.sort((a, b) => a - b);
+    for(var i = 0; i < aft.length; i++){
+        if(aft[i] > tmp){
+            break;
+        }
     }
-    for(let i = width + index - 2; i > index; i--){
-        res[index + width - 1][i] = num++;
+    permutation = pre.concat(aft);
+    [permutation[index], permutation[index + i + 1]] = [permutation[index + i + 1], permutation[index]];
+    return permutation;
+}
+```
+
+##### 	方法1优化:
+
+```javascript
+var getPermutation = function(n, k) {
+    let arr = new Array(n).fill(0).map((v, i) => i + 1);
+    while(k > 1){
+        findNextPermutation(arr);
+        k--;
     }
-    for(let i = index + width - 1; i > index; i--){
-        res[i][index] = num++;
+    return arr.join("");
+};
+
+function findNextPermutation(permutation){
+    let len = permutation.length;
+    let i = len - 2, j;
+    while(i >= 0 && permutation[i] > permutation[i + 1]){
+        i--;
     }
-    width -= 2;
-    if(width > 0){
-        circle(res, index + 1, width, num);
+    for(j = len - 1; j > i; j--){
+        if(permutation[j] > permutation[i]){
+            break;
+        }
+    }
+    [permutation[j], permutation[i]] = [permutation[i], permutation[j]];
+    let start = i + 1, end = len - 1;
+    while(start < end){
+        [permutation[start++], permutation[end--]] = [permutation[end], permutation[start]];
     }
 }
 ```
+
+##### 	方法2：
+
+```javascript
+var getPermutation = function(n, k) {
+    let res = [];
+    let num = new Array(n).fill(0).map((v, i)=> i + 1);
+    while(n > 1) {
+        let fac = factorial(--n);
+        let now = Math.ceil((k / fac)) - 1;
+        res.push(num[now]);
+        num.splice(now, 1);
+        k -= fac * now;
+    }
+    res.push(num[0]);
+    return res.join("");
+}
+
+function factorial(n){
+    if(n == 1){
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+```
+
+##### 	方法2优化：
+
+```javascript
+var getPermutation = function(n, k) {
+    let res = [];
+    let facArr = new Array(n);
+    facArr[0] = 1;
+    let sum = 1;
+    for(let i = 1; i < n; i++){
+        sum *= i;
+        facArr[i] = sum;
+    }
+    let num = new Array(n).fill(0).map((v, i)=> i + 1);
+    while(n > 1) {
+        let fac = facArr[--n];
+        let now = Math.ceil((k / fac)) - 1;
+        res.push(num[now]);
+        num.splice(now, 1);
+        k -= fac * now;
+    }
+    res.push(num[0]);
+    return res.join("");
+}
+```
+
