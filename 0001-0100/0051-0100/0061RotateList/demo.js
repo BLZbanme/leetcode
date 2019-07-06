@@ -59,7 +59,28 @@ var rotateRight = function(head, k){
     head = nodeArr[index];
     nodeArr[index - 1].next = null;
     return head;
+}
 
+var rotateRight = function(head, k) {
+    if(!head || k == 0){
+        return head;
+    }
+    let p = head;
+    let len = 1;
+    while(!!p.next){
+        p = p.next;
+        len++;
+    }
+    p.next = head;
+    k %= len;
+    if(k != 0){
+        for(let i = len - k; i > 0; i--){
+            p = p.next;
+        }
+    }
+    head = p.next;
+    p.next = null;
+    return head;
 }
 
 function ListNode(val) {
