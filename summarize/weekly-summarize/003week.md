@@ -737,3 +737,294 @@ var canJump = function(nums) {
     return distance >= len - 1;
 };
 ```
+
+# 198. House Robber
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and **it will automatically contact the police if two adjacent houses were broken into on the same night**.
+
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight **without alerting the police**.
+
+**Example 1:**
+
+```
+Input: [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+             Total amount you can rob = 1 + 3 = 4.
+```
+
+**Example 2:**
+
+```
+Input: [2,7,9,3,1]
+Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+             Total amount you can rob = 2 + 9 + 1 = 12.
+```
+
+##### 2019.07.07
+
+##### 我的思路：
+
+##### 方法1:
+
+​		dp: opt[i],表示在i坐标时最大的价值，他可以分为两种情况，
+
+1. opt[i - 1]，表示我们不偷i坐标的财物，现在我们的累计经济就是opt[i - 1]
+
+2. opt[i - 2] + v[i]，表示我们会偷i坐标的财物，现在我们的累计经济就是opt[I - 2] + v[i]
+
+   我们比较取1,2的最大值，可以递归下去。但是递归会产生很多重复子问题，所以我采用自底向上的动态规划解法。
+
+```javascript
+var rob = function(nums) {
+    let len = nums.length;
+    if(len == 0){
+        return 0;
+    }
+    if(len == 1){
+        return nums[0];
+    }
+    let opt = [];
+    opt[0] = nums[0];
+    opt[1] = Math.max(nums[0], nums[1]);
+    for(var i = 2; i < len; i++){
+        opt[i] = Math.max(opt[i - 2] + nums[i], opt[i - 1]);
+    };
+    return opt[len - 1];
+};
+```
+
+##### 方法2:
+
+​	优化用两个变量分别存储前一项和前第二项的位置的最大财产值。
+
+```javascript
+var rob = function(nums) {
+    let len = nums.length;
+    if(len == 0){
+        return 0;
+    }
+    if(len == 1){
+        return nums[0];
+    }
+    let pre2 = nums[0];
+    let pre1 = Math.max(nums[0], nums[1]);
+    let max = pre1;
+    for(var i = 2; i < len; i++){
+        max = Math.max(pre2 + nums[i], pre1);
+        pre2 = pre1;
+        pre1 = max;
+    };
+    return max;
+};
+```
+
+# 0213. House Robber II
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are **arranged in a circle.** That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have security system connected and **it will automatically contact the police if two adjacent houses were broken into on the same night**.
+
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight **without alerting the police**.
+
+**Example 1:**
+
+```
+Input: [2,3,2]
+Output: 3
+Explanation: You cannot rob house 1 (money = 2) and then rob house 3 (money = 2),
+             because they are adjacent houses.
+```
+
+**Example 2:**
+
+```
+Input: [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+             Total amount you can rob = 1 + 3 = 4.
+```
+
+##### 2019.07.07
+
+##### 我的思路：
+
+​	本题是0198House Robber的修改版，我的思路就是分两种情况考虑，然后比较这两种情况的大小：
+
+​	1:如果偷了第一家，就不能偷到最后一家。dp的下标范围就是0->len-2.
+
+​	2:如果要偷最后一家的话，就从第二家开始偷起。dp的下标范围就是1->len-1.
+
+​	最后比较这两种情况的大小，返回最大值。
+
+​	时间复杂度O(n)
+
+```javascript
+var rob = function(nums) {
+    let len = nums.length;
+    if(len == 0){
+        return 0;
+    }
+    if(len == 1){
+        return nums[0];
+    }
+    if(len == 2){
+        return Math.max(...nums);
+    }
+    let pre2 = nums[0];
+    let pre1 = Math.max(nums[0], nums[1]);
+    let res1 = pre1;
+    for(let i = 2; i < len - 1; i++){
+        res1 = Math.max(pre2 + nums[i], pre1);
+        pre2 = pre1;
+        pre1 = res1;
+    }
+    pre2 = nums[1];
+    pre1 = Math.max(nums[1], nums[2]);
+    let res2 = pre1;
+    for(let i = 3; i < len; i++){
+        res2 = Math.max(pre2 + nums[i], pre1);
+        pre2 = pre1;
+        pre1 = res2;
+    }
+    return Math.max(res1, res2);
+};
+```
+
+##### 	改进
+
+​	把dp的过程抽成一个函数。
+
+```javascript
+var rob = function(nums) {
+    let len = nums.length;
+    if(len == 0){
+        return 0;
+    }
+    if(len == 1){
+        return nums[0];
+    }
+    if(len == 2){
+        return Math.max(...nums);
+    }
+    return Math.max(dp(nums, 2, len - 1), dp(nums, 3, len));
+};
+
+function dp(nums, index, end) {
+    let pre2 = nums[index - 2];
+    let pre1 = Math.max(nums[index - 2], nums[index - 1]);
+    let res = pre1;
+    for(let i = index; i < end; i++){
+        res = Math.max(pre2 + nums[i], pre1);
+        pre2 = pre1;
+        pre1 = res;
+    }
+    return res;
+}
+```
+
+# 303. Range Sum Query - Immutable
+
+Given an integer array *nums*, find the sum of the elements between indices *i* and *j* (*i* ≤ *j*), inclusive.
+
+**Example:**
+
+```
+Given nums = [-2, 0, 3, -5, 2, -1]
+
+sumRange(0, 2) -> 1
+sumRange(2, 5) -> -1
+sumRange(0, 5) -> -3
+```
+
+**Note:**
+
+1. You may assume that the array does not change.
+2. There are many calls to *sumRange* function.
+
+##### 2019.07.07
+
+##### 我的思路：
+
+##### 	方法1（超时了）：
+
+​	用一个上三角存储i -> j的距离。
+
+​	反思：初始化的时候里面两个for循环的开销太大了，没必要。
+
+```javascript
+var NumArray = function(nums) {
+    let len = nums.length;
+    var tmpArray = new Array(len);
+    for(let i = 0; i < len; i++){
+        tmpArray[i] = new Array(len);
+    }
+    for(let i = 0; i < len; i++){
+        tmpArray[i][i] = nums[i];
+        for(let j = i + 1; j < len; j++){
+            tmpArray[i][j] = tmpArray[i][j - 1] +  nums[j];
+        }
+    }
+    this.tmpArray = tmpArray;
+};
+
+/** 
+ * @param {number} i 
+ * @param {number} j
+ * @return {number}
+ */
+NumArray.prototype.sumRange = function(i, j) {
+    return this.tmpArray[i][j];
+};
+```
+
+##### 	方法2：
+
+​	用一个数组存储起点i的下一位到 j点的距离，但是这样为了判断从0到j是很麻烦的。于是有了方法3
+
+```javascript
+var NumArray = function(nums) {
+    let len = nums.length;
+    var tmpArray = new Array(len);
+    tmpArray[0] = nums[0];
+    for(let i = 1; i < len; i++){
+        tmpArray[i] = tmpArray[i - 1] + nums[i];
+    }
+    this.tmpArray = tmpArray;
+};
+
+/** 
+ * @param {number} i 
+ * @param {number} j
+ * @return {number}
+ */
+NumArray.prototype.sumRange = function(i, j) {
+    return this.tmpArray[j] - (i > 0 ? this.tmpArray[i - 1] : 0);
+};
+```
+
+##### 别人的写法：
+
+##### 	方法3：
+
+​	tmpArray数组中存储了从起点到j - 1点的距离。
+
+```javascript
+var NumArray = function(nums) {
+    let len = nums.length;
+    var tmpArray = new Array(len + 1);
+    tmpArray[0] = 0;
+    for(let i = 0; i < len; i++){
+        tmpArray[i + 1] = tmpArray[i] + nums[i];
+    }
+    this.tmpArray = tmpArray;
+};
+
+/** 
+ * @param {number} i 
+ * @param {number} j
+ * @return {number}
+ */
+NumArray.prototype.sumRange = function(i, j) {
+    return this.tmpArray[j + 1] - this.tmpArray[i];
+};
+```
