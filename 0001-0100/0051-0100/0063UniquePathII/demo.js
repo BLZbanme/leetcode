@@ -73,6 +73,24 @@ var uniquePathsWithObstacles = function(obstacleGrid) {
     return dp[width - 1];
 }
 
+var uniquePathsWithObstacles = function(obstacleGrid) {
+    const height = obstacleGrid.length, width = obstacleGrid[0].length;
+    let dp = new Array(height + 1);
+    for(let i = 0; i <= height; i++){
+        dp[i] = new Array(width + 1).fill(0);
+    }
+    dp[0][1] = 1;
+    for(let i = 1; i <= height; i++){
+        for(let j = 1; j <= width; j++){
+            if(!obstacleGrid[i - 1][j - 1]){
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+    }
+    return dp[height][width];
+}
+
+
 console.log(uniquePathsWithObstacles([
     [0,0,0],
     [0,1,0],
