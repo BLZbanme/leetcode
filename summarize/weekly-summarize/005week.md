@@ -36,7 +36,7 @@ Output: false
 ​		时间复杂度平均O(logn)，最坏O(n)。
 
 ```javascript
-var search = function(nums, target) {
+var search = function (nums, target) {
     let len = nums.length;
     let lo = 0;
     let hi = len - 1;
@@ -99,7 +99,7 @@ Output: 2->3
 ​		遇到重复的元素就一直找到他后面不重复的，并把这些重复的一次性断链。
 
 ```javascript
-var deleteDuplicates = function(head) {
+var deleteDuplicates = function (head) {
     let tmpHead = new ListNode(0);
     tmpHead.next = head;
     let pre = tmpHead;
@@ -111,6 +111,7 @@ var deleteDuplicates = function(head) {
                 tmp = tmp.next;
             }
             tmp = tmp.next
+            
             if (!tmp) {
                 pre.next = tmp;
             }
@@ -130,7 +131,7 @@ var deleteDuplicates = function(head) {
 ​		同样的思路，别人写的比我优美多了
 
 ```javascript
-var deleteDuplicates = function(head) {
+var deleteDuplicates = function (head) {
     let tmpHead = new ListNode(0);
     tmpHead.next = head;
     let pre = tmpHead;
@@ -139,7 +140,8 @@ var deleteDuplicates = function(head) {
         while (cur.next && cur.val === cur.next.val) {
             cur = cur.next;
         }
-        if (pre.next == cur) {
+        
+        if (pre.next === cur) {
             pre = pre.next;
         }
         else {
@@ -176,7 +178,7 @@ Output: 1->2->3
 ​		遇到重复的数值就一直找到不重复为止。
 
 ```javascript
-var deleteDuplicates = function(head) {
+var deleteDuplicates = function (head) {
     let fakeHead = new ListNode(0);
     fakeHead.next = head;
     let pre = fakeHead;
@@ -185,6 +187,7 @@ var deleteDuplicates = function(head) {
         while (tmp.next && tmp.next.val === tmp.val) {
             tmp = tmp.next;
         }
+        
         pre.next = tmp;
         pre = tmp;
         tmp = tmp.next;
@@ -217,7 +220,7 @@ Output: 1->2->2->4->3->5
 ​		值得注意的时候，当preAll == preTmp，需要判断，不然会产生bug。
 
 ```javascript
-var partition = function(head, x) {
+var partition = function (head, x) {
     let fakeHead = new ListNode(0);
     fakeHead.next = head;
     let tmp = head;
@@ -252,7 +255,7 @@ var partition = function(head, x) {
 ​		用两个链表，一个存小于x的结点，一个存不小于x的结点，然后把它们连起来
 
 ```javascript
-var partition = function(head, x) {
+var partition = function (head, x) {
     let head1 = new ListNode(0);
     let head2 = new ListNode(0);
     let p1 = head1;
@@ -300,7 +303,7 @@ Output: [1,2,2,3,5,6]
 ​		算法第四版中，原地合并一个数组用的这种方式。
 
 ```javascript
-var merge = function(nums1, m, nums2, n) {
+var merge = function (nums1, m, nums2, n) {
     let index1 = 0;
     let index2 = 0;
     let tmp = [...nums1];
@@ -316,10 +319,10 @@ var merge = function(nums1, m, nums2, n) {
         }
         else {
             nums1[i] = nums2[index2++];
-        }
-    }
+        };
+    };
     return nums1;
-};
+}
 ```
 
 ##### 别人的方法：
@@ -327,7 +330,7 @@ var merge = function(nums1, m, nums2, n) {
 ​		从后面合并起。如果j >= 0说明nums1的排完了，继续插nums2的。若j < 0，说明i不一定插完了，但是i前面本来就是有序的，不用继续插了
 
 ```javascript
-var merge = function(nums1, m, nums2, n) {
+var merge = function (nums1, m, nums2, n) {
     let i = m - 1;
     let j = n - 1;
     let k = m + n - 1;
@@ -337,11 +340,11 @@ var merge = function(nums1, m, nums2, n) {
         }
         else {
             nums1[k--] = nums2[j--];
-        }
-    }
+        };
+    };
     while (j >= 0) {
         nums1[k--] = nums2[j--];
-    }
+    };
     return nums1;
 }
 ```
@@ -374,7 +377,7 @@ Output:
 ​		dfs，增加一个判断i == index，这样不会把连续重复的漏了
 
 ```javascript
-var subsetsWithDup = function(nums) {
+var subsetsWithDup = function (nums) {
     let res = [];
     nums.sort((a, b) => a - b);
     addResult(res, [], 0, nums);
@@ -389,8 +392,8 @@ function addResult(res, arr, index, nums) {
             arr.push(nums[i]);
             addResult(res, arr, i + 1, nums);
             arr.pop();
-        }
-    }
+        };
+    };
 }
 ```
 
@@ -399,7 +402,7 @@ function addResult(res, arr, index, nums) {
 ​		排序之后，计算每个重复值的个数，然后直接在之前result中的每个元素后面怼1-k个重复值。
 
 ```javascript
-var subsetsWithDup = function(nums) {
+var subsetsWithDup = function (nums) {
     let res = [];
     let empty = [];
     res.push(empty);
@@ -409,16 +412,97 @@ var subsetsWithDup = function(nums) {
         while (((i + 1) < len) && nums[i + 1] === nums[i]) {
             duplicateCount++;
             i++;
-        }
+        };
+        
         for (let j = 0, preNum = res.length; j < preNum; j++) {
             let ele = [...res[j]];
             for (let k = 0; k < duplicateCount; k++) {
                 ele.push(nums[i]);
                 res.push([...ele]);
-            } 
-        }
-    }
+            }; 
+        };
+    };
     return res;
 }
 ```
 
+# 91. Decode Ways
+
+A message containing letters from `A-Z` is being encoded to numbers using the following mapping:
+
+```
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+```
+
+Given a **non-empty** string containing only digits, determine the total number of ways to decode it.
+
+**Example 1:**
+
+```
+Input: "12"
+Output: 2
+Explanation: It could be decoded as "AB" (1 2) or "L" (12).
+```
+
+**Example 2:**
+
+```
+Input: "226"
+Output: 3
+Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
+```
+
+##### 2019.07.18
+
+##### 我的思路：
+
+​		dp，单单纯纯的一个动态规划的题，但是我一开始写的判断过程很复杂。值得注意的是dp的临时数组声明的下标是对应字符串下一位的，方便初始化dpArr[0]，dpArr[1]。
+
+```javascript
+var numDecodings = function(s) {
+    const N = s.length;
+    let dpArr = new Array(N + 1);
+    dpArr[0] = dpArr[1] = +s[0] > 0 ? 1 : 0;
+    for (let i = 2; i <= N; i++) {
+        if (s[i - 1] === '0' 
+            && (s[i - 2] === '0' || +s[i - 2] > 2)
+        ) {
+            return 0;
+        }
+        else if (+s.slice(i - 2, i) <= 26) {
+            if (s[i - 1] === '0' || s[i - 2] === '0') {
+                dpArr[i] = dpArr[i - 2];
+            }
+            else {
+                dpArr[i] = dpArr[i - 1] + dpArr[i - 2];
+            }
+        }   
+        else {
+            dpArr[i] = dpArr[i - 1];
+        }
+    }
+    return dpArr[N];
+};
+```
+
+##### 优化后：
+
+​		上面写完之后，思路更清晰了。但这样跑出来并没有上面快，可能因为上面我写了什么情况下直接返回'0'。
+
+```javascript
+var numDecodings = function(s) {
+    const N = s.length;
+    let dpArr = new Array(N + 1).fill(0);
+    dpArr[0] = dpArr[1] = s[0] === '0' ? 0 : 1;
+    for (let i = 2; i <= N; i++) {
+        const now = +s[i - 1];
+        const pre = +s.slice(i - 2, i);
+        dpArr[i] += now > 0 ? dpArr[i - 1] : 0;
+        dpArr[i] += pre >= 10 && pre <= 26 ? dpArr[i - 2] : 0;
+    }
+    return dprr[N];
+};
+```

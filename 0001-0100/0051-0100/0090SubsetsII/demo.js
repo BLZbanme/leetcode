@@ -2,7 +2,7 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
-var subsetsWithDup = function(nums) {
+var subsetsWithDup = function (nums) {
     let res = [];
     nums.sort((a, b) => a - b);
     addResult(res, [], 0, nums);
@@ -21,7 +21,7 @@ function addResult(res, arr, index, nums) {
     }
 }
 
-var subsetsWithDup = function(nums) {
+var subsetsWithDup = function (nums) {
     let res = [];
     let empty = [];
     res.push(empty);
