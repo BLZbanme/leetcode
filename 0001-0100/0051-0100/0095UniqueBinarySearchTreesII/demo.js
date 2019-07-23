@@ -33,16 +33,6 @@ var generateTrees = function(n) {
 };
 
 function multip(leftTrees, nodeVal, rightTrees, result) {
-    // let newLeftTrees = JSON.parse(JSON.stringify(leftTrees));
-    // let newRightTrees = JSON.parse(JSON.stringify(rightTrees));
-    // for (let left of newLeftTrees) {
-    //     for (let right of newRightTrees) {
-    //         let newNode = new TreeNode(nodeVal);
-    //         newNode.left = left;
-    //         newNode.right = right;
-    //         result.push(newNode);
-    //     }
-    // }
     for (let left of leftTrees) {
         for (let right of rightTrees) {
             let newNode = new TreeNode(nodeVal);
@@ -84,6 +74,42 @@ function clone(node, offset) {
     newNode.left = clone(node.left, offset);
     newNode.right = clone(node.right, offset);
     return newNode;
+}
+
+var generateTrees = function(n) {
+    if (n === 0) {
+        return [];
+    }
+    return genTrees(1, n);
+}
+
+function genTrees(start, end) {
+    
+    let list = [];
+    if (start > end) {
+        list.push(null);
+        return list;
+    }
+
+    if (start == end) {
+        list.push(new TreeNode(start));
+        return list;
+    }
+    let left;
+    let right;
+    for (let i = start; i <= end; i++) {
+        left = genTrees(start, i - 1);
+        right = genTrees(i + 1, end);
+        for (let el of left) {
+            for (let er of right) {
+                let newNode = new TreeNode(i);
+                newNode.left = el;
+                newNode.right = er;
+                list.push(newNode);
+            }
+        }
+    }
+    return list;
 }
 
 function TreeNode(val) {
