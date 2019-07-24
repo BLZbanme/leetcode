@@ -8,6 +8,27 @@ var strStr = function(haystack, needle) {
 };
 
 var strStr = function(haystack, needle) {
+    let i, j;
+    const M = needle.length;
+    const N = haystack.length;
+    for (i = 0, j = 0; i < N && j < M; i++) {
+        if (haystack[i] === needle[j]) {
+            j++;
+        }
+        else {
+            i -= j;
+            j = 0;
+        }
+    }
+    if (j == M) {
+        return i - M;
+    }
+    else {
+        return -1;
+    }
+};
+
+var strStr = function(haystack, needle) {
     if(needle == ""){
         return 0;
     }
