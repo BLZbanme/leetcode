@@ -1,16 +1,36 @@
+# 106. Construct Binary Tree from Inorder and Postorder Traversal
 
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-/**
- * @param {number[]} inorder
- * @param {number[]} postorder
- * @return {TreeNode}
- */
+Given inorder and postorder traversal of a tree, construct the binary tree.
+
+**Note:**
+You may assume that duplicates do not exist in the tree.
+
+For example, given
+
+```
+inorder = [9,3,15,20,7]
+postorder = [9,15,7,20,3]
+```
+
+Return the following binary tree:
+
+```
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+##### 2019.07.29
+
+##### 	我的思路：
+
+##### 				疯狂递归
+
+​		先写了直接划分数组的，然后写了个根据下标来划的
+
+```javascript
 var buildTree = function(inorder, postorder) {
     if (!postorder.length) {
         return null;
@@ -28,7 +48,9 @@ var buildTree = function(inorder, postorder) {
     root.right = buildTree(inorderRight, postorderRight);
     return root;
 };
+```
 
+```javascript
 var buildTree = function(inorder, postorder) {
     const N = postorder.length;
     if (!postorder.length) {
@@ -47,12 +69,4 @@ var buildTreeHelper = function(inorder, postorder, inorderStart, inorderEnd, pos
     root.right = buildTreeHelper(inorder, postorder, index + 1, inorderEnd, postorderStart + index - inorderStart, postorderEnd - 1);
     return root;
 }
-
-function TreeNode(val) {
-    this.val = val;
-    this.left = this.right = null;
-}
-
-console.log(buildTree([9,3,15,20,7], [9,15,7,20,3]))
-
-console.log(buildTree([1,2,3], [3,2,1]))
+```
