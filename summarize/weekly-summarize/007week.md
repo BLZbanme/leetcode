@@ -387,6 +387,54 @@ function Cmn(m, n) {
 }
 ```
 
+##### 		数学方法的最终无敌优化版，补于20190802
+
+​		当时就想到了Cmn可以用dp求，但是当时懒得写，后来越想越觉得不该偷懒，于是补上
+
+```javascript
+var getRow = function(rowIndex) {
+    let result = [1];
+    if (!rowIndex) {
+        return result;
+    }
+    let dp = [1];
+    var i;
+    for (i = 1; i <= rowIndex / 2; i++) {
+        dp[i] = dp[i - 1] * (rowIndex - i + 1) / i;
+        result.push(dp[i])
+    }
+    i -= rowIndex % 2 ? 0 : 1;
+    while (i >= 1) {
+        result.push(dp[--i]);
+    }
+    return result;
+};
+```
+
+写完之后又发现还是有冗余，下面才是
+
+##### 		究极进化版：
+
+```javascript
+var getRow = function(rowIndex) {
+    let dp = [1];
+    if (!rowIndex) {
+        return dp;
+    }
+    var i;
+    for (i = 1; i <= rowIndex / 2; i++) {
+        dp[i] = dp[i - 1] * (rowIndex - i + 1) / i;
+    }
+    i -= rowIndex % 2 ? 0 : 1;
+    while (i >= 1) {
+        dp.push(dp[--i]);
+    }
+    return dp;
+};
+```
+
+
+
 ##### 		方法二：
 
 ​		dp
