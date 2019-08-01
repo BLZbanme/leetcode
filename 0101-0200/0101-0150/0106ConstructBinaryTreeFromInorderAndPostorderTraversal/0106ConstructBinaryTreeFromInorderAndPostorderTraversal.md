@@ -1,72 +1,84 @@
-# 106. Construct Binary Tree from Inorder and Postorder Traversal
+# 116. Populating Next Right Pointers in Each Node
 
-Given inorder and postorder traversal of a tree, construct the binary tree.
+You are given a **perfect binary tree** where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
+
+```
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
+```
+
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to `NULL`.
+
+Initially, all next pointers are set to `NULL`.
+
+ 
+
+**Example:**
+
+![img](https://assets.leetcode.com/uploads/2019/02/14/116_sample.png)
+
+```
+Input: {"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":null,"right":null,"val":4},"next":null,"right":{"$id":"4","left":null,"next":null,"right":null,"val":5},"val":2},"next":null,"right":{"$id":"5","left":{"$id":"6","left":null,"next":null,"right":null,"val":6},"next":null,"right":{"$id":"7","left":null,"next":null,"right":null,"val":7},"val":3},"val":1}
+
+Output: {"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":{"$id":"4","left":null,"next":{"$id":"5","left":null,"next":{"$id":"6","left":null,"next":null,"right":null,"val":7},"right":null,"val":6},"right":null,"val":5},"right":null,"val":4},"next":{"$id":"7","left":{"$ref":"5"},"next":null,"right":{"$ref":"6"},"val":3},"right":{"$ref":"4"},"val":2},"next":null,"right":{"$ref":"7"},"val":1}
+
+Explanation: Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B.
+```
 
 **Note:**
-You may assume that duplicates do not exist in the tree.
 
-For example, given
+- You may only use constant extra space.
+- Recursive approach is fine, implicit stack space does not count as extra space for this problem.
 
-```
-inorder = [9,3,15,20,7]
-postorder = [9,15,7,20,3]
-```
-
-Return the following binary tree:
-
-```
-    3
-   / \
-  9  20
-    /  \
-   15   7
-```
-
-##### 2019.07.29
+##### 2019.08.01
 
 ##### 	我的思路：
 
-##### 				疯狂递归
-
-​		先写了直接划分数组的，然后写了个根据下标来划的
+##### 						层次遍历：
 
 ```javascript
-var buildTree = function(inorder, postorder) {
-    if (!postorder.length) {
+var connect = function(root) {
+    if (!root) {
         return null;
     }
-    let root = new TreeNode(postorder.pop());
-    let index = inorder.indexOf(root.val);
-
-    let inorderLeft = inorder.slice(0, index);
-    let inorderRight = inorder.slice(index + 1);
-
-    let postorderLeft = postorder.slice(0, index);
-    let postorderRight = postorder.slice(index);
-
-    root.left = buildTree(inorderLeft, postorderLeft);
-    root.right = buildTree(inorderRight, postorderRight);
+    let queue = [root];
+    while (queue.length) {
+        let len = queue.length;
+        while (len--) {
+            let tmp = queue.shift();
+            tmp.next = len ? queue[0] : null;
+            if (tmp.left) {
+                queue.push(tmp.left);
+            }
+            if (tmp.right) {
+                queue.push(tmp.right);
+            }
+        }
+    }
     return root;
 };
 ```
 
-```javascript
-var buildTree = function(inorder, postorder) {
-    const N = postorder.length;
-    if (!postorder.length) {
-        return null;
-    }
-    return buildTreeHelper(inorder, postorder, 0, N - 1, 0, N - 1);
-};
+##### 别人的方法：
 
-var buildTreeHelper = function(inorder, postorder, inorderStart, inorderEnd, postorderStart, postorderEnd) {
-    if (inorderStart > inorderEnd) {
-        return null;
+​		递归
+
+```javascript
+var connect = function(root) {
+    let tmp = root;
+    while (tmp && tmp.left) {
+        let cur = tmp;
+        while (cur) {
+            cur.left.next = cur.right;
+            cur.right.next = !cur.next ? null : cur.next.left;
+            cur = cur.next;
+        }
+        tmp = tmp.left;
     }
-    let root = new TreeNode(postorder[postorderEnd]);
-    let index = inorder.indexOf(root.val);
-    root.left = buildTreeHelper(inorder, postorder, inorderStart, index - 1, postorderStart, postorderStart + index - inorderStart - 1);
-    root.right = buildTreeHelper(inorder, postorder, index + 1, inorderEnd, postorderStart + index - inorderStart, postorderEnd - 1);
     return root;
 }
 ```
