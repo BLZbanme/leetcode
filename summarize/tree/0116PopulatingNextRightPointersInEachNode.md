@@ -1,154 +1,90 @@
-# 114. Flatten Binary Tree to Linked List
+# 116. Populating Next Right Pointers in Each Node
 
-Given a binary tree, flatten it to a linked list in-place.
-
-For example, given the following tree:
+You are given a **perfect binary tree** where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
 
 ```
-    1
-   / \
-  2   5
- / \   \
-3   4   6
+struct Node {
+  int val;
+  Node *left;
+  Node *right;
+  Node *next;
+}
 ```
 
-The flattened tree should look like:
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to `NULL`.
+
+Initially, all next pointers are set to `NULL`.
+
+ 
+
+**Example:**
+
+![img](https://assets.leetcode.com/uploads/2019/02/14/116_sample.png)
 
 ```
-1
- \
-  2
-   \
-    3
-     \
-      4
-       \
-        5
-         \
-          6
+Input: {"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":null,"right":null,"val":4},"next":null,"right":{"$id":"4","left":null,"next":null,"right":null,"val":5},"val":2},"next":null,"right":{"$id":"5","left":{"$id":"6","left":null,"next":null,"right":null,"val":6},"next":null,"right":{"$id":"7","left":null,"next":null,"right":null,"val":7},"val":3},"val":1}
+
+Output: {"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":{"$id":"4","left":null,"next":{"$id":"5","left":null,"next":{"$id":"6","left":null,"next":null,"right":null,"val":7},"right":null,"val":6},"right":null,"val":5},"right":null,"val":4},"next":{"$id":"7","left":{"$ref":"5"},"next":null,"right":{"$ref":"6"},"val":3},"right":{"$ref":"4"},"val":2},"next":null,"right":{"$ref":"7"},"val":1}
+
+Explanation: Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B.
 ```
 
-##### 2019.07.30
+**Note:**
+
+- You may only use constant extra space.
+- Recursive approach is fine, implicit stack space does not count as extra space for this problem.
+
+##### 2019.08.01
 
 ##### 	我的思路：
 
 ##### 				方法1：
 
-​		铁憨憨版，我这种并不是原地实现，实属铁憨憨
+​		层次遍历
 
 ```javascript
-var flatten = function(root) {
+var connect = function(root) {
     if (!root) {
         return null;
     }
-    let arr = [];
-    dfs(root, arr);
-    let n = arr.length - 1;
-    while (n--) {
-        arr[n].left = null;
-        arr[n].right = arr[n + 1];
+    let queue = [root];
+    while (queue.length) {
+        let len = queue.length;
+        while (len--) {
+            let tmp = queue.shift();
+            tmp.next = len ? queue[0] : null;
+            if (tmp.left) {
+                queue.push(tmp.left);
+            }
+            if (tmp.right) {
+                queue.push(tmp.right);
+            }
+        }
     }
     return root;
 };
-
-function dfs(node, arr) {
-    if (!node) {
-        return;
-    }
-    arr.push(node);
-    dfs(node.left, arr);
-    dfs(node.right, arr);
-}
 ```
 
 ##### 				别人的方法：
 
 ##### 方法1：
 
-​		递归，RLD的后序遍历，一开始是这样写的
+​		迭代
 
 ````javascript
-var pre = null;
-
-var flatten = function(root) {
-    if (!root) {
-        return;
-    }
-    flatten(root.right);
-    flatten(root.left);
-    root.right = pre;
-    root.left = null;
-    pre = root;
-}
-````
-
-​		由于运行测试用例时，pre全局声明不会把它重新置为null，导致出现bug。所以我先改了一版下面的。
-
-```javascript
-let pre = null;
-
-var flatten = function(root) {
-    dfs(root);
-    pre = null;
-}
-
-function dfs(root) {
-    if (!root) {
-        return;
-    }
-    dfs(root.right);
-    dfs(root.left);
-    root.right = pre;
-    root.left = null;
-    pre = root;
-}
-```
-
-​		又由于全局变量并不是一种好的解决方案，我使用了闭包。
-
-````javascript
-var flatten = function(root) {
-    let pre = null;
-    function dfs(root) {
-        if (!root) {
-            return;
-        }
-        dfs(root.right);
-        dfs(root.left);
-        root.right = pre;
-        root.left = null;
-        pre = root;
-    }
-    dfs(root);
-}
-````
-
-​		最后我干脆用非递归写了一遍
-
-````javascript
-var flatten = function(root) {
-    let stack = [];
-    let pre = null;
-    let cur = root;
-    while (cur || stack.length) {
+var connect = function(root) {
+    let tmp = root;
+    while (tmp && tmp.left) {
+        let cur = tmp;
         while (cur) {
-            stack.push(cur);
-            cur = cur.right;
+            cur.left.next = cur.right;
+            cur.right.next = !cur.next ? null : cur.next.left;
+            cur = cur.next;
         }
-        cur = stack[stack.length - 1];
-        if (cur.left && cur.left !== pre) {
-            cur = cur.left;
-        }
-        else {
-            cur.right = pre;
-            cur.left = null;
-            stack.pop();
-            pre = cur;
-            cur = null;
-        }
+        tmp = tmp.left;
     }
     return root;
 }
 ````
 
-##### 注：高亮答案中提到了morris遍历，周末看
+​	
