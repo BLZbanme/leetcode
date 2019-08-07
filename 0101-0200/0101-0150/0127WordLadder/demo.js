@@ -47,6 +47,9 @@ function diffNum(word, pattern) {
 }
 
 var ladderLength = function(beginWord, endWord, wordList) {
+    if (wordList.indexOf(endWord) === -1) {
+        return 0;
+    }
     let beginSet = new Set();
     let endSet = new Set();
 
@@ -54,10 +57,12 @@ var ladderLength = function(beginWord, endWord, wordList) {
     let visited = new Set();
     let a = 'a'.charCodeAt();
     let z = 'z'.charCodeAt();
+    let dict = new Set(wordList);
 
     beginSet.add(beginWord);
     endSet.add(endWord);
-    while (!beginSet.size && !endSet.size) {
+
+    while (beginSet.size) {
         if (beginSet.size > endSet.size) {
             let set = beginSet;
             beginSet = endSet;
@@ -70,13 +75,12 @@ var ladderLength = function(beginWord, endWord, wordList) {
             for (let i = 0; i < chs.length; i++) {
                 for (let c = a; c <= z; c++) {
                     let old = chs[i];
-                    debugger
-                    chs[i] = c.toString();
+                    chs[i] = String.fromCharCode(c);
                     let target = chs.join("");
                     if (endSet.has(target)) {
                         return len + 1;
                     }
-                    if (!visited.has(target) && wordList.indexOf(target) !== -1) {
+                    if (!visited.has(target) && dict.has(target)) {
                         tmp.add(target);
                         visited.add(target);
                     }
@@ -90,6 +94,10 @@ var ladderLength = function(beginWord, endWord, wordList) {
     return 0;
 }
 
+
+console.log(ladderLength("hit", "cog", ["hot","dot","dog","lot","log"]))
+console.log(ladderLength("hot", "dog", ["hot","dog"]))
+console.log(ladderLength("hit", "cog", ["hot","dot","dog","lot","log"]))
+
 console.log(ladderLength("a", "c", ["a","b","c"]))
 console.log(ladderLength("hit", "cog", ["hot","dot","dog","lot","log","cog"]))
-console.log(ladderLength("hit", "cog", ["hot","dot","dog","lot","log"]))
