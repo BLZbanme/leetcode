@@ -316,4 +316,232 @@ var maxProfit = function(prices) {
 }
 ```
 
-​	
+# 127. Word Ladder
+
+Given two words (*beginWord* and *endWord*), and a dictionary's word list, find the length of shortest transformation sequence from *beginWord* to *endWord*, such that:
+
+1. Only one letter can be changed at a time.
+2. Each transformed word must exist in the word list. Note that *beginWord* is *not* a transformed word.
+
+**Note:**
+
+- Return 0 if there is no such transformation sequence.
+- All words have the same length.
+- All words contain only lowercase alphabetic characters.
+- You may assume no duplicates in the word list.
+- You may assume *beginWord* and *endWord* are non-empty and are not the same.
+
+**Example 1:**
+
+```
+Input:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output: 5
+
+Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+return its length 5.
+```
+
+**Example 2:**
+
+```
+Input:
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log"]
+
+Output: 0
+
+Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
+```
+
+##### 2019.08.07
+
+##### 别人的方法：
+
+​		这题由于我BFS的题目练习的比较少，并且一开始理解错题目意思了，没写出来，就直接学习了别人的思路。
+
+巧妙地是永远都是把beginSet交换成beginSet和endSet中较少元素的那一个。
+
+```javascript
+var ladderLength = function(beginWord, endWord, wordList) {
+    if (wordList.indexOf(endWord) === -1) {
+        return 0;
+    }
+    let beginSet = new Set();
+    let endSet = new Set();
+
+    let len = 1;
+    let visited = new Set();
+    let a = 'a'.charCodeAt();
+    let z = 'z'.charCodeAt();
+    let dict = new Set(wordList);
+
+    beginSet.add(beginWord);
+    endSet.add(endWord);
+
+    while (beginSet.size) {
+        if (beginSet.size > endSet.size) {
+            let set = beginSet;
+            beginSet = endSet;
+            endSet = set;
+        }
+
+        let tmp = new Set();
+        for (let word of beginSet) {
+            let chs = word.split("");
+            for (let i = 0; i < chs.length; i++) {
+                for (let c = a; c <= z; c++) {
+                    let old = chs[i];
+                    chs[i] = String.fromCharCode(c);
+                    let target = chs.join("");
+                    if (endSet.has(target)) {
+                        return len + 1;
+                    }
+                    if (!visited.has(target) && dict.has(target)) {
+                        tmp.add(target);
+                        visited.add(target);
+                    }
+                    chs[i] = old;
+                }
+            }
+        }
+        beginSet = tmp;
+        len++;
+    }
+    return 0;
+}
+```
+
+# 129. Sum Root to Leaf Numbers
+
+Given a binary tree containing digits from `0-9` only, each root-to-leaf path could represent a number.
+
+An example is the root-to-leaf path `1->2->3` which represents the number `123`.
+
+Find the total sum of all root-to-leaf numbers.
+
+**Note:** A leaf is a node with no children.
+
+**Example:**
+
+```
+Input: [1,2,3]
+    1
+   / \
+  2   3
+Output: 25
+Explanation:
+The root-to-leaf path 1->2 represents the number 12.
+The root-to-leaf path 1->3 represents the number 13.
+Therefore, sum = 12 + 13 = 25.
+```
+
+**Example 2:**
+
+```
+Input: [4,9,0,5,1]
+    4
+   / \
+  9   0
+ / \
+5   1
+Output: 1026
+Explanation:
+The root-to-leaf path 4->9->5 represents the number 495.
+The root-to-leaf path 4->9->1 represents the number 491.
+The root-to-leaf path 4->0 represents the number 40.
+Therefore, sum = 495 + 491 + 40 = 1026.
+```
+
+##### 2019.08.08
+
+##### 我的方法：
+
+​		dfs非递归
+
+```javascript
+var sumNumbers = function(root) {
+    if (!root) {
+        return 0;
+    }
+    let stack = [];
+    let numStack = [];
+    let cur = root;
+    let pre = null;
+    let sum = 0;
+    while (cur || stack.length) {
+        while (cur) {
+            stack.push(cur);
+            numStack.push(cur.val);
+            cur = cur.left;
+        }
+        cur = stack[stack.length - 1];
+        
+        if (cur.right && cur.right !== pre) {
+            pre = cur;
+            cur = cur.right;
+            continue;
+        }
+        if (!cur.right && !cur.left) {
+            sum += +numStack.join("");
+        }
+        pre = cur;
+        stack.pop();
+        numStack.pop();
+        cur = null;
+    }
+    return sum;
+};
+```
+
+​		递归
+
+```javascript
+var sumNumbers = function(root) {
+    if (!root) {
+        return 0;
+    }
+    let sum = 0;
+    function helper(node, stack) {
+        stack.push(node.val);
+        if (node.left) {
+            helper(node.left, stack);
+            stack.pop();
+        }
+        if (node.right) {
+            helper(node.right, stack);
+            stack.pop();
+        }
+        if (!node.left && !node.right) {
+            sum += +stack.join("");
+        }
+    }
+
+    helper(root, []);
+    return sum;
+}
+```
+
+##### 别人的方法：
+
+​		别人的递归比我写的好一些
+
+```javascript
+var sumNumbers = function(root) {
+    return sum(root, 0);
+}
+
+function sum(node, s) {
+    if (!node) {
+        return 0;
+    }
+    if (!node.right && !node.left) {
+        return s * 10 + node.val;
+    }
+    return sum(node.left, s * 10 + node.val) + sum(node.right, s * 10 + node.val);
+}
+```
