@@ -10,28 +10,26 @@ var partition = function(s) {
 };
 
 function helper(array, start, end, length, s, result) {
+    if (end > length) {
+        return;
+    }
     if (start === length) {
         result.push(Array.from(array));
         return;
     }
-    
-    let i = 1;
-    while (end + i <= length) {
-        debugger
-        let tmp = s.slice(start, end + i);
-        let palindrome = isPalindrome(tmp);
-        if (palindrome) {
-            helper(array, start, end + i, length, s, result);
-            array.push(tmp);
-            helper(array, end + i, end + i, length, s, result);
-            array.pop();
-        }
-        else {
-            return;
-        }
-        i++;
+        // debugger
+    let tmp = s.slice(start, end + 1);
+    let palindrome = isPalindrome(tmp);
+    if (palindrome) {
+        helper(array, start, end + 1, length, s, result);
+        array.push(tmp);
+        helper(array, end + 1, end + 1, length, s, result);
+        array.pop();
     }
-    
+    else {
+        helper(array, start, end + 1, length, s, result);
+        return;
+    }
 }
 
 function isPalindrome(str) {
@@ -44,5 +42,7 @@ function isPalindrome(str) {
     }
     return true;
 }
+
+console.log(partition("efe"));
 
 console.log(partition("aab"));
