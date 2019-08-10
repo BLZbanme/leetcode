@@ -1,7 +1,27 @@
-/**
- * @param {string} s
- * @return {string[][]}
- */
+# 131. Palindrome Partitioning
+
+Given a string *s*, partition *s* such that every substring of the partition is a palindrome.
+
+Return all possible palindrome partitioning of *s*.
+
+**Example:**
+
+```
+Input: "aab"
+Output:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+```
+
+##### 2019.08.09
+
+##### 我的方法：
+
+​		回溯
+
+````javascript
 var partition = function(s) {
     let result = [];
     let arr = [];
@@ -42,7 +62,11 @@ function isPalindrome(str) {
     }
     return true;
 }
+````
 
+​		由于几个本来可以用全局变量传递的参数，在递归里面传了很多次，所以我选择使用闭包来写
+
+```javascript
 var partition = function(s) {
     let result = [];
     let arr = [];
@@ -85,8 +109,13 @@ function isPalindrome(str) {
     }
     return true;
 }
+```
 
+##### 别人的方法：
 
+​		dp，二维```dp[i][j]```来存储字符串的i到j是不是回文串
+
+```javascript
 var partition = function(s) {
     const N = s.length;
     let result = [];
@@ -113,7 +142,4 @@ var partition = function(s) {
     }
     return result[N];
 }
-
-console.log(partition("efe"));
-
-console.log(partition("aab"));
+```
