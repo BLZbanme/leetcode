@@ -1,14 +1,29 @@
-/**
- * Definition for a binary tree node.
- * function TreeNode(val) {
- *     this.val = val;
- *     this.left = this.right = null;
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {number[]}
- */
+# 144. Binary Tree Preorder Traversal
+
+Given a binary tree, return the *preorder* traversal of its nodes' values.
+
+**Example:**
+
+```
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [1,2,3]
+```
+
+**Follow up:** Recursive solution is trivial, could you do it iteratively?
+
+##### 2019.08.14
+
+##### 我的方法：
+
+​		递归
+
+````javascript
 var preorderTraversal = function(root) {
     let result = [];
 
@@ -24,8 +39,11 @@ var preorderTraversal = function(root) {
     DLR(root);
     return result;
 };
+````
 
+​		非递归
 
+```javascript
 var preorderTraversal = function(root) {
     let result = [];
     let stack = [];
@@ -49,7 +67,13 @@ var preorderTraversal = function(root) {
     }
     return result;
 }
+```
 
+##### 别人的方法：
+
+​		非递归
+
+````javascript
 var preorderTraversal = function(root) {
     let result = [];
     let rights = [];
@@ -65,17 +89,5 @@ var preorderTraversal = function(root) {
     }
     return result;
 }
+````
 
-function TreeNode(val) {
-    this.val = val;
-    this.left = this.right = null;
-}
-
-var a = new TreeNode(1);
-var b = new TreeNode(2);
-var c = new TreeNode(3);
-
-a.right = b;
-b.left = c;
-
-console.log(preorderTraversal(a));
