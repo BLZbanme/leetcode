@@ -1,14 +1,30 @@
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} head
- * @return {ListNode}
- */
+# 147. Insertion Sort List
+
+Sort a linked list in *O*(*n* log *n*) time using constant space complexity.
+
+**Example 1:**
+
+```
+Input: 4->2->1->3
+Output: 1->2->3->4
+```
+
+**Example 2:**
+
+```
+Input: -1->5->3->4->0
+Output: -1->0->3->4->5
+```
+
+##### 2019.08.27
+
+##### 我的方法：
+
+​		*O*(*n* log *n*)满足要求的只要快排，归并和堆排序，由于快排和堆排序在链表中的不是很好操作。所以我第一反应就是用归并排序。而自底向上的归并排序我感觉边界条件不是很好写，所以我选择写的自顶向下的递归版，效果还不错。
+
+##### 		注：思路基本跟高亮答案一样，可喜可贺，使用了之前刷题学到的用两个指针，其中一个每次遍历两步长，来找到中间结点。然后我把中间结点的next置为null，这样递归的时候边界容易判断是否遍历到终点了
+
+````javascript
 var sortList = function(head) {
     let result = up2downMergeSort(head);
     return result;
@@ -56,30 +72,4 @@ function merge(head1, head2) {
 
     return fakerHead.next;
 }
-
-function ListNode(val) {
-    this.val = val;
-    this.next = null;
-}
-
-var a = new ListNode(-1);
-var b = new ListNode(5);
-var c = new ListNode(3);
-var d = new ListNode(4);
-var e = new ListNode(0);
-a.next = b;
-b.next = c;
-c.next = d;
-d.next = e;
-
-console.log(sortList(a));
-
-var a = new ListNode(4);
-var b = new ListNode(2);
-var c = new ListNode(1);
-var d = new ListNode(3);
-a.next = b;
-b.next = c;
-c.next = d;
-
-console.log(sortList(a));
+````
