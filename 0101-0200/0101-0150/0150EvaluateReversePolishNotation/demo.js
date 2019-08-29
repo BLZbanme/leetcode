@@ -27,8 +27,8 @@ function operation(one, two, oper) {
         case "*":
             return one * two;
         case "/":
-            let tmp = Math.floor(one / two);
-            return tmp < 0 ? -Math.floor(Math.abs(one / two)) : tmp;
+            let tmp = one / two;
+            return tmp < 0 ? Math.ceil(tmp) : Math.floor(tmp);
         default:
             return;
     }
