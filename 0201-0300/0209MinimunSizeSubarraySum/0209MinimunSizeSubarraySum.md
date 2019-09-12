@@ -1,62 +1,3 @@
-# 204. Count Primes
-
-Count the number of prime numbers less than a non-negative number, **n**.
-
-**Example:**
-
-```
-Input: 10
-Output: 4
-Explanation: There are 4 prime numbers less than 10, they are 2, 3, 5, 7.
-```
-
-##### 2019.09.10
-
-##### 我的思路：
-
-​		蠢蠢的遍历
-
-```javascript
-var countPrimes = function(n) {
-    if (n <= 2) {
-        return 0;
-    }
-    let count = 1;
-    for (let i = 3; i < n; i++) {
-        let sqrt = Math.floor(Math.sqrt(i));
-        for (var j = 2; j <= sqrt; j++) {
-            if (i % j === 0) {
-                break;
-            }
-        }
-        if (j > sqrt) {
-            count++;
-        }
-    }
-    return count;
-};
-```
-
-##### 别人的方法：
-
-​	把遍历到的数的倍数全部标记为非质数
-
-```javascript
-var countPrimes = function(n) {
-    let notPrime = new Array(n).fill(false);
-    let count = 0;
-    for (let i = 2; i < n; i++) {
-        if (!notPrime[i]) {
-            count++;
-            for (let j = 2; i * j < n; j++) {
-                notPrime[i * j] = true;
-            }
-        }
-    }
-    return count;
-}
-```
-
 # 209. Minimum Size Subarray Sum
 
 Given an array of **n** positive integers and a positive integer **s**, find the minimal length of a **contiguous** subarray of which the sum ≥ **s**. If there isn't one, return 0 instead.
@@ -75,7 +16,7 @@ If you have figured out the *O*(*n*) solution, try coding another solution of wh
 
 ##### 2019.09.12
 
-##### 我的思路：
+##### 	我的思路：
 
 ​		用一个数组记录，从某个点开始当前长度的序列的和，然后判断这个和是否大于等于s，若大于等于直接返回当前长度。
 
@@ -100,7 +41,7 @@ var minSubArrayLen = function(s, nums) {
 };
 ```
 
-##### 别人的方法：
+##### 	别人的方法：
 
 ##### 方法1：
 
