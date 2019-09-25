@@ -10,7 +10,7 @@
  * @return {boolean}
  */
 var isPalindrome = function(head) {
-    if (!head) {
+    if (!head || !head.next) {
         return true;
     }
 
@@ -47,28 +47,26 @@ var isPalindrome = function(head) {
 
 
 var isPalindrome = function(head) {
-    if (!head) {
+    if (!head || !head.next) {
         return true;
     }
 
-    // debugger
     //利用差速遍历找到中间的结点
     let fakerHead = new ListNode(0);
     let one = head;
     let two = head;
-    while (two.next && two.next.next) {
+    while (two && two.next) {
         two = two.next.next;
         let tmp = one.next;
         one.next = fakerHead.next;
         fakerHead.next = one;
         one = tmp;
     }
-    let midHead = one.next;
-    one.next = fakerHead.next;
-    let newHead = one;
+    let midHead = two ? one.next : one;
+    let newHead = fakerHead.next;
     
     //拿逆序后的后半段和前半段相比较
-    while (midHead) {
+    while (midHead && newHead) {
         if (midHead.val !== newHead.val) {
             return false;
         }
@@ -78,18 +76,11 @@ var isPalindrome = function(head) {
     return true;
 };
 
+
 function ListNode(val) {
     this.val = val;
     this.next = null;
 }
-
-var a = new ListNode(1);
-console.log(isPalindrome(a));
-
-var a = new ListNode(1);
-var b = new ListNode(2);
-a.next = b;
-console.log(isPalindrome(a));
 
 var a = new ListNode(1);
 var b = new ListNode(2);
@@ -99,6 +90,12 @@ b.next = c;
 console.log(isPalindrome(a));
 
 
+var a = new ListNode(1);
+var b = new ListNode(0);
+var c = new ListNode(0);
+a.next = b;
+b.next = c;
+console.log(isPalindrome(a));
 
 
 var a = new ListNode(1);
@@ -109,4 +106,15 @@ a.next = b;
 b.next = c;
 c.next = d;
 console.log(isPalindrome(a));
+
+
+var a = new ListNode(1);
+console.log(isPalindrome(a));
+
+var a = new ListNode(1);
+var b = new ListNode(2);
+a.next = b;
+console.log(isPalindrome(a));
+
+
 
