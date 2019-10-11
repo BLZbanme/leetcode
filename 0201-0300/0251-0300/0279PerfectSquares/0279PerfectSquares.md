@@ -111,6 +111,8 @@ var numSquares = function(n) {
 
 ##### 	方法2：BFS
 
+​	广度优先遍历，每次给当前值，增加一个完全平方数，并把深度加一，直到找到最后的结果。值得注意的是需要增加一个set判断已经计算过的值，简化次数。
+
 ```javascript
 var numSquares = function(n) {
     let queue = [0];
