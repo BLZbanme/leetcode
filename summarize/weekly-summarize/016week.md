@@ -242,3 +242,69 @@ var numSquares = function(n) {
 }
 ```
 
+# 274. H-Index
+
+Given an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher's h-index.
+
+According to the [definition of h-index on Wikipedia](https://en.wikipedia.org/wiki/H-index): "A scientist has index *h* if *h* of his/her *N* papers have **at least** *h* citations each, and the other *N − h* papers have **no more than** *h* citations each."
+
+**Example:**
+
+```
+Input: citations = [3,0,6,1,5]
+Output: 3 
+Explanation: [3,0,6,1,5] means the researcher has 5 papers in total and each of them had 
+             received 3, 0, 6, 1, 5 citations respectively. 
+             Since the researcher has 3 papers with at least 3 citations each and the remaining 
+             two with no more than 3 citations each, her h-index is 3.
+```
+
+**Note:** If there are several possible values for *h*, the maximum one is taken as the h-index.
+
+##### 2019.10.12
+
+##### 我的思路：
+
+​		O(nlogn)的方法，先排序，然后找到一个不大于下标+1的引用数
+
+```javascript
+var hIndex = function(citations) {
+    citations.sort((a, b) => b - a);
+    let index = 0;
+    while (citations[index] >= index + 1) {
+        index++;
+    }
+    return index;
+};
+```
+
+##### 别人的方法：
+
+​		O(n)的方法
+
+1. 第一次遍历，记录各个引用数的次数，大于n的统一记为n
+2. 第二次遍历，从后往前，找到第一个应用数不大于小标的值
+
+```javascript
+var hIndex = function(citations) {
+    const N = citations.length;
+    let buckets = new Array(N + 1).fill(0);
+    for (let c of citations) {
+        if (c >= N) {
+            buckets[N]++;
+        }
+        else {
+            buckets[c]++;
+        }
+    }
+    let count = 0;
+    for (let i = N; i >= 0; i--) {
+        count += buckets[i];
+        if (count >= i) {
+            return i;
+        }
+    }
+    return 0;
+}
+```
+
