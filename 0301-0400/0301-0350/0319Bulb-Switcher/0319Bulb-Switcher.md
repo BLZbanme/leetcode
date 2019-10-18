@@ -51,7 +51,7 @@ function aHasB(a, b) {
 
 ##### 别人的写法：
 
-​	数学方法
+​	数学方法，由于必须要奇数次才能为亮灯，所以只有完全平方数符合。所以计算1~n中的完全平凡数即为答案
 
 ```javascript
 var bulbSwitch = function(n) {
