@@ -19,11 +19,24 @@ Output: 8
 **Note**:
 Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
 
-##### 2019.09.29
+##### 2019.10.12
 
-##### 	我的思路：
+##### 我的思路：
 
-​		因为已知条件1~N的和是固定的，然后减去现有数组的值，得到的就是缺失值。
+ 排序找到第一个和下标不符合的数
+
+```javascript
+var missingNumber = function(nums) {
+    nums.sort((a, b) => a - b);
+    for (let i = 0; i <= nums.length; i++) {
+        if (nums[i] !== i) {
+            return i;
+        }
+    }
+};
+```
+
+ 数学的写法
 
 ```javascript
 var missingNumber = function(nums) {
@@ -46,4 +59,3 @@ var missingNumber = function(nums) {
     return xor ^ i;
 }
 ```
-
