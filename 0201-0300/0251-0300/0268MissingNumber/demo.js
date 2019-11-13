@@ -13,12 +13,17 @@ var missingNumber = function(nums) {
 
 var missingNumber = function(nums) {
     const N = nums.length;
-    // let sum = 0;
-    // nums.forEach(e => {
-    //     sum += e;
-    // });
     return (1 + N) * N / 2 - nums.reduce((total, num) => total + num);
 };
+
+var missingNumber = function(nums) {
+    let xor = 0;
+    let i = 0;
+    for (; i < nums.length; i++) {
+        xor = xor ^ i ^ nums[i];
+    }
+    return xor ^ i;
+}
 
 console.log(missingNumber([0]));
 console.log(missingNumber([3, 0, 1]));

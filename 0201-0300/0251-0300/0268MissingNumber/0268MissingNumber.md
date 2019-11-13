@@ -21,9 +21,9 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
 
 ##### 2019.10.12
 
-##### 	我的思路：
+##### 我的思路：
 
-​		排序找到第一个和下标不符合的数
+ 排序找到第一个和下标不符合的数
 
 ```javascript
 var missingNumber = function(nums) {
@@ -36,7 +36,7 @@ var missingNumber = function(nums) {
 };
 ```
 
-​		数学的写法
+ 数学的写法
 
 ```javascript
 var missingNumber = function(nums) {
@@ -45,3 +45,17 @@ var missingNumber = function(nums) {
 };
 ```
 
+##### 别人的方法：
+
+​		跟我的思路相同，利用```a ^ b ^ b = a```更加牛逼！
+
+```javascript
+var missingNumber = function(nums) {
+    let xor = 0;
+    let i = 0;
+    for (; i < nums.length; i++) {
+        xor = xor ^ i ^ nums[i];
+    }
+    return xor ^ i;
+}
+```
