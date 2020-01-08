@@ -67,8 +67,7 @@ var findItinerary = function(tickets) {
     })
 
     let result = [];
-
-    debugger
+    
     function dfs(str) {
         while(map.has(str) && map.get(str).length) {
             dfs(map.get(str).shift());
@@ -95,11 +94,9 @@ var findItinerary = function(tickets) {
 
     let result = [];
     let stack = ['JFK'];
-    debugger
     while (stack.length) {
-        let arr = map.get(stack[stack.length - 1]);
-        while (arr && arr.length) {
-            stack.push(arr.shift());
+        while (map.has(stack[stack.length - 1]) && map.get(stack[stack.length - 1]).length) {
+            stack.push(map.get(stack[stack.length - 1]).shift());
         }
         result.unshift(stack.pop());
     }
