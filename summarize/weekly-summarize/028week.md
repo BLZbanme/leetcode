@@ -159,3 +159,46 @@ function find(parent, index) {
 }
 ```
 
+# 面试题46. 把数字翻译成字符串
+
+给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。
+
+##### 示例 1:
+
+输入: 12258
+输出: 5
+解释: 12258有5种不同的翻译，分别是"bccfi", "bwfi", "bczi", "mcfi"和"mzi"
+
+提示：0 <= num < 2<sup>31</sup>
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+##### 2020.06.09
+
+##### 我的思路：
+
+​	自顶向下动态规划，可以很直接的发现到第i位的字符有多少划分方法等于到i-1步和i-2步的话，和走楼梯问题很像，只是把判断条件变成了一个值10-25的判断
+
+```javascript
+var translateNum = function(num) {
+    let numStr = num.toString();
+    const N = numStr.length;
+    const dp = new Array(N + 1);
+    dp[0] = 1;
+    dp[1] = 1;
+    for (let i = 2; i <= N; i++) {
+        dp[i] = dp[i - 1];
+        let tmp = numStr.substr(i - 2, 2);
+        if (+tmp <= 25 && +tmp > 9) {
+            dp[i] += dp[i - 2];
+        }
+    }
+    return dp[N];
+};
+```
+
+##### 注：这种递推关系的可以不借助dp数组来存储，用几个变量来存储更方便（这种写法我也写太多了，就懒得写了）
+
+题外话，这种划分字符串的题还有很多会用递归回溯的方法来做，此题也可，但我感觉不太好，就没用。
