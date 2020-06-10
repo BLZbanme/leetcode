@@ -98,6 +98,43 @@ function find(parent, index) {
     return index;
 }
 
+var equationsPossible = function(equations) {
+    const parent = new Array(26).fill(-1);
+    const aCode = 'a'.charCodeAt();
+    for (let equation of equations) {
+        if (equation[1] === "=") {
+            let left = equation[0].charCodeAt() - aCode;
+            let right = equation[3].charCodeAt() - aCode;
+            union(parent, left, right);
+        }
+    }
+
+    for (let equation of equations) {
+        if (equation[1] === "!") {
+            let left = equation[0].charCodeAt() - aCode;
+            let right = equation[3].charCodeAt() - aCode;
+            if (find(parent, left) === find(parent, right)) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+function union(parent, index1, index2) {
+    parent[find(parent, index1)] = find(parent, index2);
+}
+
+function find(parent, index) {
+    while (parent[index] !== -1) {
+        index = parent[index];
+    }
+    return index;
+}
+
+
+
 console.log(equationsPossible(["a!=a"])) //false
 
 console.log(equationsPossible(["a==c", "a==b", "c==d", "a!=d"])) //false
