@@ -85,10 +85,10 @@ var threeSum = function(nums) {
             }
             else {
                 result.push([nums[i], nums[lo], nums[hi]]);
-                while(lo < hi && nums[lo + 1] == nums[lo]){
+                while (lo < hi && nums[lo + 1] === nums[lo]) {
                     lo++;
                 }
-                while(hi > lo && nums[hi - 1] == nums[hi]){
+                while (hi > lo && nums[hi - 1] === nums[hi]) {
                     hi--;
                 }
                 lo++;
@@ -96,7 +96,6 @@ var threeSum = function(nums) {
             }
         }
     }
-
     return result;
 };
 
