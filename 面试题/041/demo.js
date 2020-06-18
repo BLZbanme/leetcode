@@ -2,7 +2,7 @@
  * initialize your data structure here.
  */
 var MedianFinder = function() {
-    this.priorityQueue = [];
+    this.orderArray = [];
 };
 
 /** 
@@ -10,12 +10,12 @@ var MedianFinder = function() {
  * @return {void}
  */
 MedianFinder.prototype.addNum = function(num) {
-    if (!this.priorityQueue.length) {
-        this.priorityQueue.push(num);
+    if (!this.orderArray.length) {
+        this.orderArray.push(num);
     }
     else {
-        let index = binarySearch(this.priorityQueue, num);
-        this.priorityQueue.splice(index, 0, num);
+        let index = binarySearch(this.orderArray, num);
+        this.orderArray.splice(index, 0, num);
     }
 };
 
@@ -41,12 +41,12 @@ function binarySearch(arr, val) {
  * @return {number}
  */
 MedianFinder.prototype.findMedian = function() {
-    if (this.priorityQueue.length % 2) {
-        return this.priorityQueue[(this.priorityQueue.length - 1) / 2];
+    if (this.orderArray.length % 2) {
+        return this.orderArray[(this.orderArray.length - 1) / 2];
     }
     else {
-        return (this.priorityQueue[this.priorityQueue.length / 2 - 1] 
-            + this.priorityQueue[this.priorityQueue.length / 2]) / 2;
+        return (this.orderArray[this.orderArray.length / 2 - 1] 
+            + this.orderArray[this.orderArray.length / 2]) / 2;
     }
 };
 
