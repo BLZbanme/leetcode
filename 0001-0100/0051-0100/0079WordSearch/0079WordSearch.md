@@ -1,8 +1,46 @@
-/**
- * @param {character[][]} board
- * @param {string} word
- * @return {boolean}
- */
+# 79. Word Search
+
+Given a 2D board and a word, find if the word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+**Example:**
+
+```
+board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+Given word = "ABCCED", return true.
+Given word = "SEE", return true.
+Given word = "ABCB", return false.
+```
+
+**Constraints:**
+
+- `board` and `word` consists only of lowercase and uppercase English letters.
+- `1 <= board.length <= 200`
+- `1 <= board[i].length <= 200`
+- `1 <= word.length <= 10^3`
+
+##### 2020.06.19
+
+#### 我的方法
+
+##### 回溯
+
+思路是正确的，但是写的着实有几分丑。
+
+碰到一个等于word[0]的点，就找它的上下左右，递归下去，把每个经过的点先改成```""```，等递归返回后再改回来。
+
+还有种思路是用visited二维数组记录遍历过的点
+
+**注：**二维数组找路径常用回溯
+
+```javascript
 var exist = function(board, word) {
     if (!board) {
         return false;
@@ -74,7 +112,11 @@ var exist = function(board, word) {
         return false;
     }
 };
+```
 
+##### 写的好看的回溯！
+
+```javascript
 var exist = function(board, word) {
     if (!board) {
         return false;
@@ -122,20 +164,5 @@ var exist = function(board, word) {
 
     return false;
 };
+```
 
-console.log(exist(
-    [["a"]],
-    "ab"
-))// false;
-
-
-
-console.log(exist(
-    [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]],
-    "ABCCED"
-))// true;
-
-console.log(exist(
-    [["a","b"],["c","d"]],
-    "abcd"
-)) // false;
