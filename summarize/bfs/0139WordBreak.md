@@ -87,35 +87,57 @@ var wordBreak = function(s, wordDict) {
 }
 ```
 
-##### 别人的写法：
+#### 2020.06.25 redo
 
-​		终极位运算
+```javascript
+var wordBreak = function(s, wordDict) {
+    const sLen = s.length;
+    const set = new Set(wordDict);
+    const dp = new Array(sLen).fill(false);
 
-​		举例说明：[参考别人的博客解释](https://cloud.tencent.com/developer/article/1131945)
+    for (let i = 0; i < sLen; i++) {
+        let j = i;
+        while (j >= 0) {
+            let tmp = s.slice(j, i + 1);
+            if (set.has(tmp)) {
+                if (!j || dp[j - 1]) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+            j--
+        }
+    }
+    return dp[sLen - 1];
+};
+```
 
-数组为[2,2,2,3]，一共有四个元素，进行四次循环。
+##### 别人的方法：
 
-第一次循环，b=(0000^0010)&1111=0010=2，a=(0000^0010)&1101=0000=0
+BFS，visited数组记录遍历访问到的下标
 
-第二次循环，b=(0010^0010)&1111=0000=0，a=(0000^0010)&1111=0010=2
-
-第三次循环，b=(0000^0010)&1101=0000=0，a=(0010^0010)&1111=0000=0
-
-第四次循环，b=(0000^0011)&1111=0011=3，a=(0000^0011)&1100=0000=0
-
-某个值nums[i]第一次出现的时候，b把它记录了下来，这时候a=0；接着第二次出现的时候，b被清空了，记录到了a里面；接着第三次出现的时候，b和a都被清空了。
-
-如果一个数组中，所有的元素除了一个特殊的只出现一次，其他都出现了三次，那么根据我们刚刚观察到的结论，最后这个特殊元素必定会被记录在b中。
-
-````javascript
-var singleNumber = function(nums) {
-    let a = 0;
-    let b = 0;
-    nums.forEach(e => {
-        b = (b ^ e) & ~a;
-        a = (a ^ e) & ~b;
-    })
-    return b;
+```javascript
+var wordBreak = function(s, wordDict) {
+    const set = new Set(wordDict);
+    
+    const queue = [0];
+    const visited = new Set([0]);
+    while (queue.length) {
+        let cur = queue.shift();
+        for (let i = cur + 1; i <= s.length; i++) {
+            if (visited.has(i)) {
+                continue;
+            }
+            if (set.has(s.substring(cur, i))) {
+                if (i === s.length) {
+                    return true;
+                }
+                queue.push(i);
+                visited.add(i);
+            }
+        }
+    }
+    return false;
 }
-````
+```
 

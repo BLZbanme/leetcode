@@ -37,6 +37,7 @@ var wordBreak = function(s, wordDict) {
 }
 
 var wordBreak = function(s, wordDict) {
+    // debugger
     let set = new Set(wordDict);
     if (set.has(s)) {
         return true;
