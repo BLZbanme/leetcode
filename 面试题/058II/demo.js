@@ -55,6 +55,23 @@ var reverseLeftWords = function(s, n) {
     return strArr.join("");
 };
 
+var reverseLeftWords = function(s, n) {
+    const sLen = s.length;
+    n %= sLen;
+    const arr = s.split("");
+    reverse(arr, 0, n - 1);
+    reverse(arr, n, sLen - 1);
+    reverse(arr, 0, sLen - 1);
+    return arr.join("");
+};
+
+function reverse(arr, start, end) {
+    while (start < end) {
+        [arr[start++], arr[end--]] = [arr[end], arr[start]];
+    }
+}
+
+
 console.log(reverseLeftWords("lrloseumgh", 6)) // "umghlrlose"
 
 console.log(reverseLeftWords("abcdefg", 2)) // "cdefgab"
