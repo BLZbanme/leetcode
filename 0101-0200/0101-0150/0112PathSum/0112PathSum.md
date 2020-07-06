@@ -109,3 +109,37 @@ var hasPathSum = function(root, sum) {
 }
 ```
 
+#### 2020.07.07
+
+非递归后序
+
+```javascript
+var hasPathSum = function(root, sum) {
+    const stack = [];
+    let cur = root;
+    let pre = null;
+    while (cur || stack.length) {
+        while (cur) {
+            sum -= cur.val;
+            stack.push(cur);
+            cur = cur.left
+        }
+        
+        cur = stack[stack.length - 1];
+        if (!sum && !cur.left && !cur.right) {
+            return true;
+        }
+        if (cur.right && cur.right != pre) {
+            cur = cur.right;
+        }
+        else {
+            stack.pop();
+            pre = cur;
+            sum += cur.val;
+            cur = null;
+        }
+    }
+    return false;
+};
+```
+
