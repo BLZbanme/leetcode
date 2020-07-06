@@ -221,6 +221,7 @@ const deserialize = data => {
     const list = data.split(",");
     const root = new TreeNode(list[0]);
     const queue = [root];
+    debugger
     let cursor = 1;
     while (cursor < list.length) {
         const node = queue.shift();
