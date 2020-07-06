@@ -82,3 +82,25 @@ var uniquePathsWithObstacles = function(obstacleGrid) {
 }
 ```
 
+##### 2020.07.06
+
+redo
+
+```javascript
+var uniquePathsWithObstacles = function(obstacleGrid) {
+    const M = obstacleGrid.length;
+    const N = obstacleGrid[0].length;
+    const dp = Array(N + 1).fill(0);
+
+    dp[0] = 1;
+
+    for (let i = 1; i <= M; i++) {
+        for (let j = 1; j <= N; j++) {
+            dp[j] = obstacleGrid[i - 1][j - 1] ? 0 : (dp[j - 1] + dp[j]);
+        }
+        dp[0] = 0;
+    }
+    return dp[N];
+};
+```
+
