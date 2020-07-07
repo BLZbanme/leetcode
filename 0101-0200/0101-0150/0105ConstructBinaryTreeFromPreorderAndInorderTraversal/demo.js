@@ -78,8 +78,9 @@ var buildTree = function(preorder, inorder) {
     let stack = [];
     let root = new TreeNode(preorder[0]);
     let cur = root;
+    debugger
     for (let i = 1, j = 0; i < preorder.length; i++) {
-        if (cur.val !== inorder[j]) {
+        if (cur && cur.val !== inorder[j]) {
             cur.left = new TreeNode(preorder[i]);
             stack.push(cur);
             cur = cur.left;
@@ -100,6 +101,8 @@ function TreeNode(val) {
     this.val = val;
     this.left = this.right = null;
 }
+
+console.log(buildTree([3,9,8,5,4,10,20,15,7], [4,5,8,10,9,3,15,20,7]))
 
 console.log(buildTree([3,9,20,15,7], [9,3,15,20,7]))
 
