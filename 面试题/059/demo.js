@@ -8,7 +8,6 @@ var MaxQueue = function() {
  * @return {number}
  */
 MaxQueue.prototype.max_value = function() {
-    // debugger
     if (!this.max.length) {
         return -1;
     }
@@ -20,10 +19,11 @@ MaxQueue.prototype.max_value = function() {
  * @return {void}
  */
 MaxQueue.prototype.push_back = function(value) {
+    let newNode = new ListNode(value);
     if (!this.head.next) {
-        this.head.next = new ListNode(value);
+        this.head.next = newNode;
     }
-    this.tail.next = new ListNode(value);
+    this.tail.next = newNode;
     this.tail = this.tail.next;
     this.max = this.max.filter(e => e >= value);
     this.max.push(value);
