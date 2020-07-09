@@ -123,6 +123,31 @@ class Trie {
     }
 }
 
+var respace = function(dictionary, sentence) {
+    const N = sentence.length;
+
+    const wordDict = new Set(dictionary);
+
+    const dp = Array(N + 1).fill(Infinity);
+    dp[0] = 0;
+
+    for (let i = 1; i <= N; i++) {
+        
+        for (let j = i - 1; j >= 0; j--) {
+            let tmp = sentence.slice(j, i);
+            if (wordDict.has(tmp)) {
+                dp[i] = Math.min(dp[i], dp[j]);
+            }
+            else {
+                dp[i] = Math.min(dp[i], dp[j] + i - j);
+            }
+        }
+    }
+
+    return dp[N];
+}
+
+
 console.log(respace(["looked","just","like","her","brother"], "jesslookedjustliketimherbrother"));
 
 console.log(respace(["patk","mk","bgmuaukzpbp","tpakjawagaakakmpkkikjpbmppiiazkkdko","apoggddaakoadudmw","mugaxmgwkbptxmbmt","tijagbkixiwzdddbbjjgpk","goaotk","kk","xambkwpozgouaaamzgtpkojgdbxuwkjz","gmwo","bkbpdptkjxjgatdkukxmxkabkjmiuotiikb","ad","babtgmz","kujuak","ikimadpozaxozoaikttzamjakk","jjumibouto"]
