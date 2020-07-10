@@ -469,3 +469,45 @@ var countDigitOne = function(n) {
 }
 ```
 
+# [剑指 Offer 65. 不用加减乘除做加法](https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/)
+
+写一个函数，求两个整数之和，要求在函数体内不得使用 “+”、“-”、“*”、“/” 四则运算符号。
+
+ 
+
+示例:
+
+输入: a = 1, b = 1
+输出: 2
+
+提示：
+
+a, b 均可能是负数或 0
+结果不会溢出 32 位整数
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+#### 2020.07.10
+
+#### 我的方法：
+
+没做出来
+
+#### 别人的方法：
+
+位运算：异或操作得到二进制的加法后的无进位结果，与操作左移一位后得到进位的结果。之后今天迭代，知道第二个操作数为0时，说明无进位了，操作完成。
+
+```javascript
+var maxProfit = function(prices) {
+    let result = 0;
+    let min = prices[0];
+    for (let i = 1; i < prices.length; i++) {
+        min = Math.min(min, prices[i]);
+        result = Math.max(prices[i] - min, result);
+    }
+    return result;
+};
+```
+
