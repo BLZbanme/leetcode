@@ -402,3 +402,70 @@ function mergeAndCount(nums, left, mid, right, temp) {
 }
 ```
 
+# [剑指 Offer 43. 1～n整数中1出现的次数](https://leetcode-cn.com/problems/1nzheng-shu-zhong-1chu-xian-de-ci-shu-lcof/)
+
+输入一个整数 n ，求1～n这n个整数的十进制表示中1出现的次数。
+
+例如，输入12，1～12这些整数中包含1 的数字有1、10、11和12，1一共出现了5次。
+
+ 
+
+示例 1：
+
+输入：n = 12
+输出：5
+示例 2：
+
+输入：n = 13
+输出：6
+
+限制：
+
+1 <= n < 2^31
+注意：本题与主站 233 题相同：https://leetcode-cn.com/problems/number-of-digit-one/
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/1nzheng-shu-zhong-1chu-xian-de-ci-shu-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+
+
+##### 2020.07.10
+
+##### 我的方法
+
+没做出来
+
+##### 别人的方法：
+
+计算每一位的1的次数！。
+
+```javascript
+var countDigitOne = function(n) {
+    let digit = 1;
+    let res = 0;
+    let high = Math.floor(n / 10);
+    let cur = n % 10;
+    let low = 0;
+
+    while (high || cur) {
+        if (!cur) {
+            res += high * digit;
+        }
+        else if (cur === 1) {
+            res += high * digit + low +1;
+        }
+        else {
+            res += (high + 1) * digit;
+        }
+
+        low += cur * digit;
+        cur = high % 10;
+        high = Math.floor(high / 10);
+        digit *= 10;
+    }
+
+    return res;
+}
+```
+
