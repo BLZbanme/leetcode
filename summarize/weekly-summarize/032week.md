@@ -314,3 +314,91 @@ class Trie {
 }
 ```
 
+# [剑指 Offer 51. 数组中的逆序对](https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
+
+在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+
+ 
+
+示例 1:
+
+输入: [7,5,6,4]
+输出: 5
+
+限制：
+
+0 <= 数组长度 <= 50000
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+
+
+##### 2020.07.10
+
+##### 我的思路：
+
+没做出来
+
+##### 别人的思路：
+
+经典分治！归并查找！
+
+```javascript
+var reversePairs = function(nums) {
+    const N = nums.length;
+    if (N < 2) {
+        return 0;
+    }
+
+    const copy = Array.from(nums);
+    const temp = Array(N);
+
+    return reversePairsHelper(copy, 0, N - 1, temp);
+}
+
+function reversePairsHelper(nums, left, right, temp) {
+    if (left === right) {
+        return 0;
+    }
+
+    let mid = left + ((right - left) >> 1);
+    const leftPairs = reversePairsHelper(nums, left, mid, temp);
+    const rightPairs = reversePairsHelper(nums, mid + 1, right, temp);
+    if (nums[mid] <= nums[mid + 1]) {
+        return leftPairs + rightPairs;
+    }
+
+    let crossPairs = mergeAndCount(nums, left, mid, right, temp);
+    return leftPairs + rightPairs + crossPairs;
+}
+
+function mergeAndCount(nums, left, mid, right, temp) {
+    for (let i = left; i <= right; i++) {
+        temp[i] = nums[i];
+    }
+    
+    let i = left;
+    let j = mid + 1;
+    let count = 0;
+    for (let k = left; k <= right; k++) {
+        if (i == mid + 1) {
+            nums[k] = temp[j++];
+        }
+        else if (j == right + 1) {
+            nums[k] = temp[i++];
+        }
+        else if (temp[i] <= temp[j]) {
+            nums[k] = temp[i++];
+        }
+        else {
+            nums[k] = temp[j++];
+            count += (mid - i + 1);
+        }
+    }
+
+    return count;
+}
+```
+
