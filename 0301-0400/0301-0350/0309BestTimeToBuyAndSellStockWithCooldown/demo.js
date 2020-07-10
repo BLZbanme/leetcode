@@ -7,7 +7,7 @@ var maxProfit = function(prices) {
     if (!N) {
         return 0;
     }
-    const dp = new Array(N - 1);
+    const dp = new Array(N + 1);
     for (let i = 0; i <= N; i++) {
         dp[i] = new Array(N).fill(0);
     }

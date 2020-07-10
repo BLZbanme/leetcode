@@ -29,7 +29,7 @@ var maxProfit = function(prices) {
     if (!N) {
         return 0;
     }
-    const dp = new Array(N - 1);
+    const dp = new Array(N + 1);
     for (let i = 0; i <= N; i++) {
         dp[i] = new Array(N).fill(0);
     }
@@ -93,6 +93,36 @@ var maxProfit = function(prices) {
         rest = Math.max(preSold, rest);
     }
     return Math.max(sold, rest);
+}
+```
+
+##### 2020.07.10
+
+#### redo
+
+还是没做出来
+
+```javascript
+var maxProfit = function(prices) {
+    if (!prices.length) {
+        return 0;
+    }
+
+    const N = prices.length;
+    const dp = Array(N);
+    for (let i = 0; i < N; i++) {
+        dp[i] = Array(3).fill(0);
+    }
+
+    dp[0][0] = - prices[0];
+
+    for (let i = 1; i < N; i++) {
+        dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][2] - prices[i]);
+        dp[i][1] = dp[i - 1][0] + prices[i];
+        dp[i][2] = Math.max(dp[i - 1][1], dp[i - 1][2]);
+    }
+
+    return Math.max(dp[N - 1][1], dp[N - 1][2]);
 }
 ```
 
