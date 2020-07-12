@@ -74,6 +74,56 @@ var calculateMinimumHP = function(dungeon) {
     return dp[0][0];
 }
 
+var calculateMinimumHP = function(dungeon) {
+    const M = dungeon.length;
+    const N = dungeon[0].length;
+
+    const visited = Array(M);
+    for (let i = 0; i < M; i++) {
+        visited[i] = Array(N).fill(0);
+    }
+
+    function dfs(i, j) {
+        if (i == M - 1 && j == N - 1) {
+            return dungeon[i][j] > 0 ? 1 : 1 - dungeon[i][j];
+        }
+
+        if (visited[i][j]) {
+            return visited[i][j]
+        }
+
+        let goDown = Infinity;
+        let goRight = Infinity;
+        if (i < M - 1) {
+            goDown = dfs(i + 1, j);
+        }
+        if (j < N - 1) {
+            goRight = dfs(i, j + 1);
+        }
+
+        if (goDown < goRight) {
+            if (goDown - dungeon[i][j] <= 0) {
+                visited[i][j] = 1;
+            }
+            else {
+                visited[i][j] = goDown - dungeon[i][j];
+            }
+        }
+        else {
+            if (goRight - dungeon[i][j] <= 0) {
+                visited[i][j] = 1;
+            }
+            else {
+                visited[i][j] = goRight - dungeon[i][j];
+            }
+        }
+
+        return visited[i][j];
+    }
+
+    return dfs(0, 0);
+}
+
 console.log(calculateMinimumHP([
     [1,-3,3],
     [0,-2,0],

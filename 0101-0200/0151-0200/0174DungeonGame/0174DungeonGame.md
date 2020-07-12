@@ -26,9 +26,9 @@ For example, given the dungeon below, the initial health of the knight must be a
 - The knight's health has no upper bound.
 - Any room can contain threats or power-ups, even the first room the knight enters and the bottom-right room where the princess is imprisoned.
 
-##### 2020.07.12
+#### 2020.07.12
 
-##### 	我的思路：
+#### 	我的思路：
 
 ​	正序dp失败（虽然我提交了前就知道了肯定有问题），正序dp的问题就是你不知道判断条件中路径和，和之前的最小的初始值的优先级怎么判断。
 
@@ -88,9 +88,11 @@ var calculateMinimumHP = function(dungeon) {
 };
 ```
 
-##### 	别人的方法：
+#### 	别人的方法：
 
-反序dp，从终点开始判断，就不需要路径和了
+##### 反序dp
+
+从终点开始判断，就不需要路径和了
 
 ```javascript
 var calculateMinimumHP = function(dungeon) {
@@ -112,3 +114,60 @@ var calculateMinimumHP = function(dungeon) {
 }
 ```
 
+##### dfs
+
+```javascript
+var calculateMinimumHP = function(dungeon) {
+    const M = dungeon.length;
+    const N = dungeon[0].length;
+
+    const visited = Array(M);
+    for (let i = 0; i < M; i++) {
+        visited[i] = Array(N).fill(0);
+    }
+
+    function dfs(i, j) {
+        if (i == M - 1 && j == N - 1) {
+            return dungeon[i][j] > 0 ? 1 : 1 - dungeon[i][j];
+        }
+
+        if (visited[i][j]) {
+            return visited[i][j]
+        }
+
+        let goDown = Infinity;
+        let goRight = Infinity;
+        if (i < M - 1) {
+            goDown = dfs(i + 1, j);
+        }
+        if (j < N - 1) {
+            goRight = dfs(i, j + 1);
+        }
+
+        if (goDown < goRight) {
+            if (goDown - dungeon[i][j] <= 0) {
+                visited[i][j] = 1;
+            }
+            else {
+                visited[i][j] = goDown - dungeon[i][j];
+            }
+        }
+        else {
+            if (goRight - dungeon[i][j] <= 0) {
+                visited[i][j] = 1;
+            }
+            else {
+                visited[i][j] = goRight - dungeon[i][j];
+            }
+        }
+
+        return visited[i][j];
+    }
+
+    return dfs(0, 0);
+}
+```
+
+
+
+##### 
