@@ -79,6 +79,24 @@ var lengthOfLongestSubstring = function(s) {
     return max;
 };
 
+
+var lengthOfLongestSubstring = function(s) {
+    const map = new Map();
+    let result = 0;
+    let left = 0;
+    let right = 0;
+
+    while (right < s.length) {
+        if (map.get(s[right]) != null) {
+            left = Math.max(left, map.get(s[right]) + 1)
+        }
+        map.set(s[right], right);
+        right++;
+        result = Math.max(right - left, result)
+    }
+    return result;
+};
+
 console.log(lengthOfLongestSubstring('abcabcbb')); //3
 console.log(lengthOfLongestSubstring('bbbbb')); //1
 console.log(lengthOfLongestSubstring('pwwkew')); //3
