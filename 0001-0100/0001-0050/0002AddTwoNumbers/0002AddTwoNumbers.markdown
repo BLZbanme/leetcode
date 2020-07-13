@@ -1,10 +1,10 @@
-#### 问题描述
+# 2. Add Two Numbers
 
-​	You are given two **non-empty** linked lists representing two non-negative integers. The digits are stored in **reverse order** and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+You are given two **non-empty** linked lists representing two non-negative integers. The digits are stored in **reverse order** and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
 
-​	You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
-#### **Example**
+**Example:**
 
 ```
 Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
@@ -12,11 +12,13 @@ Output: 7 -> 0 -> 8
 Explanation: 342 + 465 = 807.
 ```
 
-#### 我的解决方法	
 
-##### 2019.05.06
 
-思路是遍历l1和l2，判断遍历的两个链表项的值的和是否大于9，大于的话则近卫，时间复杂度为O(n)。
+#### 2019.05.06
+
+#### 我的方法	
+
+思路是遍历l1和l2，判断遍历的两个链表项的值的和是否大于9，大于的话则进位，时间复杂度为O(n)。
 
 新建了一个链表存储结果，额外使用了两个对象存储链表的非空尾对象，空间复杂度为O(n)
 
@@ -66,5 +68,35 @@ function addTmp(lpre,l, tmp){
         l.val += tmp;
     }
 }
+```
+
+#### 2020.07.13
+
+redo(看了我当年的代码想吐，我以前写的代码是如此的恶心。。。)
+
+```javascript
+var addTwoNumbers = function(l1, l2) {
+    let fakeHead = new ListNode();
+    let cur = fakeHead;
+    let carry = 0;
+    while (l1 || l2) {
+        let a = l1 ? l1.val : 0;
+        let b = l2 ? l2.val : 0;
+        let tmp = a + b + carry;
+        carry = Math.floor(tmp / 10);
+        tmp %= 10;
+        cur.next = new ListNode(tmp);
+        cur = cur.next;
+
+        l1 && (l1 = l1.next);
+        l2 && (l2 = l2.next);
+    }
+    
+    if (carry) {
+        cur.next = new ListNode(carry);
+    }
+    
+    return fakeHead.next;
+};
 ```
 
