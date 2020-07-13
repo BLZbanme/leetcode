@@ -71,3 +71,22 @@ function reverseListInt(node, newNode) {
 }
 ```
 
+#### 2020.07.13
+
+#### redo
+
+学到一招递归
+
+```javascript
+var reverseList = function(head) {
+    if (!head || !head.next) {
+        return head;
+    }
+
+    let p = reverseList(head.next);
+    head.next.next = head;
+    head.next = null;
+    return p;
+}
+```
+
