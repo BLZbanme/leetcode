@@ -99,6 +99,8 @@ var threeSum = function(nums) {
     return result;
 };
 
+
+
 console.log(threeSum([-2,0,0,2,2]))//[[-2,0,2]]
 
 
