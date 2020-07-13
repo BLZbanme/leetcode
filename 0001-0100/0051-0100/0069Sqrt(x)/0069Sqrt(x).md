@@ -22,7 +22,7 @@ Explanation: The square root of 8 is 2.82842..., and since
              the decimal part is truncated, 2 is returned.
 ```
 
-##### 2019.07.11
+#### 2019.07.11
 
 ##### 	我的思路：
 
@@ -49,5 +49,31 @@ var mySqrt = function(x) {
         }
     }
 }
+```
+
+#### 2020.07.13
+
+##### redo
+
+二分查找
+
+```javascript
+var mySqrt = function(x) {
+    let lo = 0;
+    let hi = x;
+    let result = 0;
+    while (lo <= hi) {
+        let mid = lo + ((hi - lo) >> 1);
+        if (mid * mid <= x) {
+            result = mid;
+            lo = mid + 1;
+        }
+        else {
+            hi = mid - 1;
+        }
+    }
+
+    return result;
+};
 ```
 
