@@ -40,9 +40,9 @@ Input:     1         1
 Output: false
 ```
 
-##### 2019.07.22
+#### 2019.07.22
 
-##### 	我的思路：
+#### 	我的思路：
 
 ​		递归
 
@@ -74,3 +74,21 @@ var isSameTree = function(p, q) {
         && isSameTree(p.right, q.right) : false;
 };
 ```
+
+#### 2020.07.13
+
+##### redo
+
+```javascript
+var isSameTree = function(p, q) {
+    if (!p && !q) {
+        return true;
+    }
+    if (!p || !q || p.val !== q.val) {
+        return false;
+    }
+
+    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+};
+```
+
