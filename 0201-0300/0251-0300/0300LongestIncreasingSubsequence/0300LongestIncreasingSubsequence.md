@@ -58,22 +58,27 @@ var lengthOfLIS = function(nums) {
 ​	```dp[i]```存的是长度为```i + 1```的子序列的最后的节点，因为，每次遍历新的数值num时，用二分查找，查找新的值在dp数组中的位置，把找到那个dp[i]改成现在值。如果查找的```i === len```，说明现在遍历的num比之前最长的递增序列的尾部还长，所以```len + 1```
 
 ```javascript
-var NumArray = function(nums) {
-    let len = nums.length;
-    var tmpArray = new Array(len + 1);
-    tmpArray[0] = 0;
-    for(let i = 0; i < len; i++){
-        tmpArray[i + 1] = tmpArray[i] + nums[i];
+var lengthOfLIS = function(nums) {
+    const N = nums.length;
+    let dp = new Array(N);
+    let len = 0;
+    for (let num of nums) {
+        let i = 0;
+        let j = len;
+        while (i !== j) {
+            let m = Math.floor((i + j) / 2);
+            if (dp[m] < num) {
+                i = m + 1;
+            }
+            else {
+                j = m;
+            }
+        }
+        dp[i] = num;
+        if (i === len) {
+            len++;
+        } 
     }
-    this.tmpArray = tmpArray;
-};
-
-/** 
- * @param {number} i 
- * @param {number} j
- * @return {number}
- */
-NumArray.prototype.sumRange = function(i, j) {
-    return this.tmpArray[j + 1] - this.tmpArray[i];
-};
+    return len;
+}
 ```
