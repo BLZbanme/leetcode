@@ -21,20 +21,6 @@ var restoreString = function(s, indices) {
     return arr.join('');
 };
 
-var restoreString = function(s, indices) {
-    if (!s) {
-        return '';
-    }
-
-    let arr = s.split('');
-    for (let i = 0; i < s.length; i++) {
-        while (indices[i] !== i) {
-            [arr[i], arr[indices[i]]] = [arr[indices[i]], arr[i]];
-            [indices[i], indices[indices[i]]] = [indices[indices[i]], indices[i]];
-        }
-    }
-    return arr.join('');
-};
 
 
 console.log(restoreString('codeleet', [4,5,6,7,0,2,1,3])); //'leetcode'
