@@ -59,27 +59,12 @@ var minDepth = function(root) {
 ​		顺手写下递归
 
 ```javascript
-var hasPathSum = function(root, sum) {
+var minDepth = function(root) {
     if (!root) {
-        return false;
+        return 0;
     }
-    let sumQueue = [sum - root.val];
-    let queue = [root];
-    while(queue.length) {
-        let node = queue.shift();
-        let num = sumQueue.shift();
-        if (num === 0 && !node.left && !node.right) {
-            return true;
-        }
-        if (node.left) {
-            queue.push(node.left);
-            sumQueue.push(num - node.left.val);
-        }
-        if (node.right) {
-            queue.push(node.right);
-            sumQueue.push(num - node.right.val);
-        }
-    }
-    return false;
+    let left = minDepth(root.left);
+    let right = minDepth(root.right);
+    return (left === 0 || right === 0) ? left + right + 1 : Math.min(left, right) + 1;
 }
 ```
