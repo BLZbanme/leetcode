@@ -53,3 +53,18 @@ var rangeBitwiseAnd = function(m, n) {
 }
 ```
 
+#### 2020.08.23
+
+##### redo
+
+这题就是求m和n二进制的公共前缀。
+
+```typescript
+var rangeBitwiseAnd = function(m: number, n: number): number {
+    while (m < n) {
+        n = n & (n - 1);
+    }
+    return n;
+}
+```
+

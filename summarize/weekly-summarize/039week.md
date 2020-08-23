@@ -196,3 +196,102 @@ const countSubstrings111 = (s: string): number => {
 }
 ```
 
+# 679. 24 Game
+
+You have 4 cards each containing a number from 1 to 9. You need to judge whether they could operated through `*`, `/`, `+`, `-`, `(`, `)` to get the value of 24.
+
+**Example 1:**
+
+```
+Input: [4, 1, 8, 7]
+Output: True
+Explanation: (8-4) * (7-1) = 24
+```
+
+
+
+**Example 2:**
+
+```
+Input: [1, 2, 1, 2]
+Output: False
+```
+
+
+
+**Note:**
+
+1. The division operator `/` represents real division, not integer division. For example, 4 / (1 - 2/3) = 12.
+2. Every operation done is between two numbers. In particular, we cannot use `-` as a unary operator. For example, with `[1, 1, 1, 1]` as input, the expression `-1 - 1 - 1 - 1` is not allowed.
+3. You cannot concatenate numbers together. For example, if the input is `[1, 2, 1, 2]`, we cannot write this as 12 + 12.
+
+#### 2020.08.22
+
+#### 我的思路：
+
+暴力，没做出来
+
+#### 别人的思路：
+
+回溯
+
+```typescript
+function judgePoint24(nums: Array<number>): boolean {
+    const DIFF = 10 ** (-6);
+
+    function solve(nums:  Array<number>): boolean {
+        if (!nums.length) {
+            return false;
+        }
+        if (nums.length == 1) {
+            return Math.abs(nums[0] - 24) < DIFF
+        }
+        let length = nums.length;
+        for (let i = 0; i < length; i++) {
+            for (let j = 0; j < length; j++) {
+                if (i === j) {
+                    continue;
+                }
+                let list2 = [];
+                for (let k = 0; k < length; k++) {
+                    if (k == j || k === i) {
+                        continue;
+                    }
+                    list2.push(nums[k]);
+                }
+
+                for (let k = 0; k < 4; k++) {
+                    if (k < 2 && i > j) {
+                        continue;
+                    }
+                    if (k == 0) {
+                        list2.push(nums[i] + nums[j]);
+                    }
+                    else if (k == 1) {
+                        list2.push(nums[i] * nums[j]);
+                    }
+                    else if (k == 2) {
+                        list2.push(nums[i] - nums[j])
+                    }
+                    else if (k == 3) {
+                        if (Math.abs(nums[j]) < DIFF) {
+                            continue;
+                        }
+                        else {
+                            list2.push(nums[i] / nums[j])
+                        }
+                    }
+                    if (solve(list2)) {
+                        return true;
+                    }
+                    list2.pop();
+                }
+            }
+        }
+        return false;
+    }
+
+    return solve(nums);
+}
+```
+
