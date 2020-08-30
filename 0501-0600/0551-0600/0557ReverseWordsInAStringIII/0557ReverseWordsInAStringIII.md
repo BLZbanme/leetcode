@@ -1,3 +1,5 @@
+# 557. Reverse Words in a String III
+
 Given a string, you need to reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
 
 **Example 1:**
@@ -26,3 +28,14 @@ var arrayPairSum = function(nums) {
 ##### 别人的写法：
 
 ​	和我大同小异
+
+#### 2020.08.30
+
+#### redo
+
+```typescript
+function reverseWords(s: string): string {
+    return s.split(/\s+/g).map(e => e.split('').reverse().join('')).join(' ');
+};
+```
+
