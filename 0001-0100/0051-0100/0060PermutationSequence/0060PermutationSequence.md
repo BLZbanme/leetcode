@@ -161,3 +161,35 @@ var getPermutation = function(n, k) {
 }
 ```
 
+#### 2020.09.05
+
+根据阶乘找到它的位置
+
+```typescript
+function getPermutation(n: number, k: number): string {
+    const dp: Array<number> = Array(n);
+    dp[0] = 1;
+    for (let i = 1; i < n; i++) {
+        dp[i] = dp[i - 1] * i;
+    }
+
+    k--;
+
+    const res = [];
+    const valid = (Array(n + 1) as any).fill(1);
+    for (let i = 1; i <= n; i++) {
+        let order = Math.floor(k / dp[n - i]) + 1;
+        for (let j = 1; j <= n; j++) {
+            order -= valid[j];
+            if (order === 0) {
+                res.push(j);
+                valid[j] = 0;
+                break;
+            }
+        }
+        k %= dp[n - i];
+    }
+    return res.join('');
+}
+```
+
