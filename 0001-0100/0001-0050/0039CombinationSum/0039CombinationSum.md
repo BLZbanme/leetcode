@@ -136,3 +136,38 @@ function find(result, arr, candidates, target, index = 0){
 ##### 题外话：
 
 ​	本来不想定义另一个方法，直接在combinationSum中迭代的，给参数赋默认值，使得第一次迭代不缺参数。但是由于此题的candidates并不是排好序的，如果每次迭代重新排序开销太大，所以声明了一个find函数。
+
+
+
+#### 2020.09.09
+
+##### redo dp
+
+```javascript
+function combinationSum(candidates, target) {
+    var dp = Array(1 + target);
+    candidates.sort(function (a, b) { return a - b; });
+    for (var i = 1; i <= target; i++) {
+        dp[i] = [];
+        for (var j = 0; j < candidates.length; j++) {
+            if (i === candidates[j]) {
+                dp[i].push([candidates[j]]);    
+                break;
+            }
+
+            if (i < candidates[j]) {
+                break;
+            }
+            
+            var tmp = dp[i - candidates[j]];
+            for (var k = 0; k < tmp.length; k++) {
+                if (candidates[j] >= tmp[k][tmp[k].length - 1]) {
+                    dp[i].push(Array.from(tmp[k]).concat([candidates[j]]));
+                }
+            }
+        }
+    }
+    return dp[target];
+}
+```
+
