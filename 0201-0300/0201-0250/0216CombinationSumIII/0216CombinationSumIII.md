@@ -56,3 +56,37 @@ var combinationSum3 = function(k, n) {
     return result;
 };
 ```
+
+#### 2020.09.11
+
+##### redo
+
+```typescript
+function combinationSum3(k: number, n: number): number[][] {
+    if (n > 45) {
+        return [];
+    }
+    const result: Array<Array<number>> = [];
+    const dfs = (arr: Array<number>, sum: number, index: number): void => {
+        if (sum > n) {
+            return;
+        }
+        if (sum == n) {
+            if (arr.length === k) {
+                result.push(Array.from(arr));
+            }
+            return;
+        }
+        for (let i = index + 1; i <= 9; i++) {
+            arr.push(i);
+            dfs(arr, sum + i, i);
+            arr.pop();
+        }
+        return;
+    }
+    dfs([], 0, 0);
+
+    return result;
+};
+```
+
