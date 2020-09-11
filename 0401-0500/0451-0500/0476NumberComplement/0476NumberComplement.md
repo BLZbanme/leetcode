@@ -62,3 +62,19 @@ var findComplement = function(num) {
 };
 ```
 
+#### 2020.09.11
+
+redo
+
+```typescript
+function findComplement(num: number): number {
+    let maxBitNum = 0;
+    let tmpNum = num;
+    while (tmpNum > 0) {
+        maxBitNum++;
+        tmpNum >>= 1;
+    }
+    return num ^ ((1 << maxBitNum) - 1);
+};
+```
+
