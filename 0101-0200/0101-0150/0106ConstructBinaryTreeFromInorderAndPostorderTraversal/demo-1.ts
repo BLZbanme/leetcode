@@ -1,34 +1,3 @@
-# 106. Construct Binary Tree from Inorder and Postorder Traversal
-
-Given inorder and postorder traversal of a tree, construct the binary tree.
-
-**Note:**
-You may assume that duplicates do not exist in the tree.
-
-For example, given
-
-```
-inorder = [9,3,15,20,7]
-postorder = [9,15,7,20,3]
-```
-
-Return the following binary tree:
-
-```
-    3
-   / \
-  9  20
-    /  \
-   15   7
-```
-
-#### 2020.09.25
-
-#### 	我的思路：
-
-递归
-
-```javascript
 function buildTree(inorder: number[], postorder: number[]): TreeNode | null {
     const helper = (inLeft: number, inRight: number, postLeft: number, postRight: number): TreeNode | null => {
         if (inLeft > inRight || postLeft > postRight) {
@@ -44,4 +13,18 @@ function buildTree(inorder: number[], postorder: number[]): TreeNode | null {
 
     return helper(0, inorder.length - 1, 0, postorder.length - 1);
 };
-```
+
+class TreeNode {
+    val: number
+    left: TreeNode | null
+    right: TreeNode | null
+    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+        this.val = (val===undefined ? 0 : val)
+        this.left = (left===undefined ? null : left)
+        this.right = (right===undefined ? null : right)
+    }
+}
+
+console.log(buildTree([2,3,1], [3,2,1])); //[1,2,null,null,3]
+
+console.log(buildTree([9,3,15,20,7], [9,15,7,20,3]));
