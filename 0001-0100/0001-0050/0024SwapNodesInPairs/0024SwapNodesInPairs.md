@@ -1,14 +1,37 @@
-​	Given a linked list, swap every two adjacent nodes and return its head.
+# 24. Swap Nodes in Pairs
 
-​	You may **not** modify the values in the list's nodes, only nodes itself may be changed.
+Given a linked list, swap every two adjacent nodes and return its head.
 
-**Example:**
+You may **not** modify the values in the list's nodes. Only nodes itself may be changed.
+
+ 
+
+**Example 1:**
+
+![img](https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg)
+
+**Example 2:**
 
 ```
-Given 1->2->3->4, you should return the list as 2->1->4->3.
+Input: head = []
+Output: []
 ```
 
-##### 2019.05.22
+**Example 3:**
+
+```
+Input: head = [1]
+Output: [1]
+```
+
+ 
+
+**Constraints:**
+
+- The number of nodes in the list is in the range `[0, 100]`.
+- `0 <= Node.val <= 100`
+
+#### 2019.05.22
 
 ##### 	我的思路：
 
@@ -121,5 +144,23 @@ var swapPairs = function(head){
     tmp.next = head;
     return tmp;
 }
+```
+
+
+
+#### 2020.10.13
+
+#### redo
+
+```typescript
+function swapPairs(head: ListNode | null): ListNode | null {
+    if (!head || !head.next) {
+        return head;
+    }
+    let next = head.next;
+    head.next = swapPairs(next.next);
+    next.next = head;
+    return next;
+};
 ```
 
