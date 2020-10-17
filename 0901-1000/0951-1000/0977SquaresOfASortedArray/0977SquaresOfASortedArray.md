@@ -61,3 +61,28 @@ var sortedSquares = function(A) {
     }
 };
 ```
+
+#### 2020.10.17
+
+##### redo
+
+```typescript
+function sortedSquares(A: number[]): number[] {
+    const N = A.length;
+    let i = 0;
+    let j = N - 1;
+    const result = [];
+    while (i <= j) {
+        if (A[j] ** 2 >= A[i] ** 2) {
+            result.unshift(A[j] ** 2);
+            j--;
+        }
+        else {
+            result.unshift(A[i] ** 2);
+            i++;
+        }
+    }
+    return result;
+};
+```
+
