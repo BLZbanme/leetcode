@@ -1,22 +1,42 @@
-#### 问题描述
+# 19. Remove Nth Node From End of List
 
-​	Given a linked list, remove the *n*-th node from the end of list and return its head.
+Given the `head` of a linked list, remove the `nth` node from the end of the list and return its head.
 
-**Example:**
+**Follow up:** Could you do this in one pass?
+
+ 
+
+**Example 1:**
+
+![img](https://assets.leetcode.com/uploads/2020/10/03/remove_ex1.jpg)
 
 ```
-Given linked list: 1->2->3->4->5, and n = 2.
-
-After removing the second node from the end, the linked list becomes 1->2->3->5.
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
 ```
 
-**Note:**
+**Example 2:**
 
-Given *n* will always be valid.
+```
+Input: head = [1], n = 1
+Output: []
+```
 
-**Follow up:**
+**Example 3:**
 
-Could you do this in one pass?
+```
+Input: head = [1,2], n = 1
+Output: [1]
+```
+
+ 
+
+**Constraints:**
+
+- The number of nodes in the list is `sz`.
+- `1 <= sz <= 30`
+- `0 <= Node.val <= 100`
+- `1 <= n <= sz`
 
 ##### 2019.05.21
 
@@ -112,5 +132,30 @@ var removeNthFromEnd = function(head, n) {
     sec.next = sec.next.next;
     return virNode.next;
 }
+```
+
+#### 2020.10.18
+
+##### redo
+
+```typescript
+function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
+    let quickNode = head;
+    for (let i = 0; i < n; i++) {
+        quickNode = quickNode && quickNode.next;
+    }
+    let fakeHead: ListNode | null = new ListNode();
+    fakeHead.next = head;
+    let cur: ListNode | null = fakeHead;
+
+    while (quickNode) {
+        cur = cur && cur.next;
+        quickNode = quickNode.next;
+    }
+    if (cur && cur.next) {
+        cur.next = cur.next.next;
+    }
+    return fakeHead.next;
+};
 ```
 
