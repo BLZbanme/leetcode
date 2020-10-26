@@ -105,3 +105,29 @@ var rob = function(root) {
     return Math.max(...rootStatus);
 };
 ```
+
+#### 2020.10.26
+
+redo
+
+```typescript
+var rob = function(root) {
+    
+    if (!root) {
+        return 0;
+    }
+
+    let sum1 = 0;
+    if (root.left) {
+        sum1 = rob(root.left.left) + rob(root.left.right);
+    }
+
+    let sum2 = 0;
+    if (root.right) {
+        sum2 = rob(root.right.left) + rob(root.right.right);
+    }
+
+    return Math.max(root.val + sum1 + sum2, rob(root.left) + rob(root.right));
+};
+```
+
