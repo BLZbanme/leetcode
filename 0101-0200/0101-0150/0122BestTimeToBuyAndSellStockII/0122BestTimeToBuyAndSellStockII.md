@@ -50,3 +50,19 @@ var maxProfit = function(prices) {
 };
 ````
 
+##### 2020.11.08
+
+Dp,永远滴神
+
+```typescript
+function maxProfit1(prices) {
+    var sold = 0;
+    var hold = -prices[0];
+    for (var i = 1; i < prices.length; i++) {
+        hold = Math.max(hold, sold - prices[i]);
+        sold = Math.max(sold, hold + prices[i]);
+    }
+    return sold;
+}
+```
+
