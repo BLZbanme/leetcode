@@ -7,7 +7,7 @@ Sort a linked list using insertion sort.
 ![img](https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif)
 A graphical example of insertion sort. The partial sorted list (black) initially contains only the first element in the list.
 With each iteration one element (red) is removed from the input data and inserted in-place into the sorted list
- 
+
 
 
 
@@ -94,4 +94,26 @@ var insertionSortList = function(head) {
     return fakerHead.next;
 }
 ````
+
+#### 2020.10.20
+
+##### redo
+
+```type
+function insertionSortList(head: ListNode | null): ListNode | null {
+    let cur = head;
+    let fakeHead = new ListNode();
+    while (cur) {
+        let next = cur.next;
+        let thePre = fakeHead;
+        while (thePre.next && thePre.next.val < cur.val) {
+            thePre = thePre.next;
+        }
+        cur.next = thePre.next;
+        thePre.next = cur;
+        cur = next;
+    }
+    return fakeHead.next;
+};
+```
 
