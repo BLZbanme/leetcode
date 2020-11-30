@@ -1,4 +1,6 @@
-​	Given an array of integers `nums` sorted in ascending order, find the starting and ending position of a given `target` value.
+# 34.Find First and Last Position of Element in Sorted Array
+
+	Given an array of integers `nums` sorted in ascending order, find the starting and ending position of a given `target` value.
 
 ​	Your algorithm's runtime complexity must be in the order of *O*(log *n*).
 
@@ -75,46 +77,55 @@ var searchRange = function(nums, target) {
 };
 ```
 
-##### 别人的写法
+#### 2020.11.01
 
-​	两个二分查找，查找出上下界
+##### redo
 
-```javascript
-var strStr = function(s, p){
-    let next = getNext(p);
-    let i = 0;
-    let j = 0;
-    let sLen = s.length;
-    let pLen = p.length;
-    while(i < sLen && j < pLen){
-        if(j == -1 || s[i] == p[j]){
-            i++;
-            j++;
-        }else{
-            j = next[j];
+```typescript
+function searchRange(nums: number[], target: number): number[] {
+    if (!nums.length) {
+        return [-1, -1];
+    }
+    let lo = loBinarySearch(nums, target);
+    let hi = hiBinarySearch(nums, target);
+    if (nums[lo] === target && nums[hi - 1] === target) {
+        return [lo, hi - 1]
+    }
+    return [-1, -1];
+};
+
+function loBinarySearch(nums: number[], target: number) {
+    let lo = 0;
+    let hi = nums.length - 1;
+    while (lo <= hi) {
+        let mid = lo + ((hi - lo) >> 1);
+        if (nums[mid] < target) {
+            lo = mid + 1;
+        }
+        else {
+            hi = mid - 1;
         }
     }
-    if(j == pLen){
-        return i - j;
-    }else{
-        return -1;
-    }
+    return lo;
 }
 
-function getNext(str){
-    let next = new Array(str.length);
-    let i = 0, j = -1;
-    next[0] = -1;
-    while(i < str.length - 1){
-        if(j == -1 || str[i] == str[j]){
-            ++i;
-            ++j;
-            next[i] = j;
-        }else{
-            j = next[j];
+function hiBinarySearch(nums: number[], target: number) {
+    let lo = 0;
+    let hi = nums.length - 1;
+    while (lo <= hi) {
+        let mid = lo + ((hi - lo) >> 1);
+        if (nums[mid] <= target) {
+            lo = mid + 1;
+        }
+        else {
+            hi = mid - 1;
         }
     }
-    return next;
+    return lo;
 }
 ```
+
+
+
+
 
