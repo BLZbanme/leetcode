@@ -64,3 +64,24 @@ var uniquePaths = function(m, n) {
     return opArr[m - 1][n - 1];
 };
 ```
+
+#### 2020.12.09
+
+##### redo
+
+##### 滚动数组
+
+```typescript
+function uniquePaths(m: number, n: number): number {
+    const dp = Array(n + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            dp[j] += dp[j - 1];
+        }
+        dp[0] = 0;
+    }
+    return dp[n];
+};
+```
+
