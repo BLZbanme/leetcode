@@ -58,26 +58,148 @@ Output: 0
 
 没写出来
 
-##### 别人的写法：
+#### 别人的写法：
 
-总体思路跟我差不多
+##### 方法1：dfs判断连通分量个数
 
 ```javascript
-var findBestValue = function(arr, target) {
-    arr.sort((a, b) => a - b);
-    const N = arr.length;
-    let i = 0;
-    while (i < N && target > arr[i] * (N - i)) {
-        target -= arr[i++];
+function makeConnected1(n: number, connections: number[][]): number { 
+    if (connections.length < n - 1) return -1;
+    const edges = new Map();
+    for (const [x, y] of connections) {
+        edges.has(x) ? edges.get(x).push(y) : edges.set(x, [y]);
+        edges.has(y) ? edges.get(y).push(x) : edges.set(y, [x]);
     }
-    if (i == N) {
-        return arr[N - 1];
+
+    const used = Array(n).fill(0);
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+        if (!used[i]) {
+            dfsHelper(i, used, edges);
+            ans++;
+        }
     }
-    // let res = Math.floor(target / (N - i));
-    // if (target - res * (N - i) > (res + 1) * (N - i) - target) {
-    //     res++;
-    // }
-    return Math.round((target - 0.0001) / (N - i));
+    return ans - 1;
 };
+
+const dfsHelper = (u: number, used: Array<number>, edges: Map<number, Array<number>>) => {
+    used[u] = 1;
+    if (edges.get(u)) {
+        for (const v of edges.get(u)!) {
+            if (!used[v]) {
+                dfsHelper(v, used, edges);
+            }
+        }
+    }
+}
+
+```
+
+##### 方法2：并查集判断连通分量个数
+
+```typescript
+function makeConnected(n: number, connections: number[][]): number {
+    if (connections.length < n - 1) return -1;
+
+    const uf = new TheUnionFind(n);
+    for (const conn of connections) {
+        uf.unite(conn[0], conn[1]);
+    }
+    return uf.setCount - 1;
+}
+
+class TheUnionFind {
+    parent: Array<number>
+    size: Array<number>
+    setCount: number
+
+    constructor(n: number) {
+        this.parent = Array(n).fill(0).map((e, index) => index);
+        this.size = Array(n).fill(1);
+        //当前连通分量数目
+        this.setCount = n;
+    }
+
+    findset(x: number) {
+        if (this.parent[x] === x) {
+            return x;
+        }
+        this.parent[x] = this.findset(this.parent[x])
+        return this.parent[x];
+    }
+
+    unite (a: number, b: number) {
+        let x = this.findset(a);
+        let y = this.findset(b);
+        if (x === y) return false;
+
+        if (this.size[x] < this.size[y]) {
+            [x, y] = [y, x];
+        }
+        this.parent[y] = x;
+        this.size[x] += this.size[y];
+        this.setCount -= 1;
+        return true;
+    }
+
+    connected(a: number, b: number) {
+        const x = this.findset(a);
+        const y = this.findset(b);
+        return x === y;
+    }
+}
+```
+
+#### 2021.01.14
+
+#### redo
+
+带rank的并查集！
+
+```typescript
+function makeConnected(n: number, connections: number[][]): number {
+    if (connections.length < n - 1) return -1;
+    const ds = new DisjointedSet(n);
+    for (let conn of connections) {
+        const [x, y] = conn;
+        ds.union(x, y);
+    } 
+    return ds.size - 1;
+}
+
+class DisjointedSet {
+    parent: Array<number>
+    rank: Array<number>
+    size: number
+
+    constructor(n: number) {
+        this.parent = Array(n).fill(-1);
+        this.rank = Array(n).fill(0);
+        this.size = n;
+    }
+
+    findRoot(x: number): number {
+        if (this.parent[x] === -1) return x;
+        return this.findRoot(this.parent[x]);
+    }
+
+    union(x: number, y: number): boolean {  
+        let xRoot = this.findRoot(x);
+        let yRoot = this.findRoot(y);
+        if (xRoot === yRoot) return false;
+        if (this.rank[xRoot] < this.rank[yRoot]) {
+            this.parent[xRoot] = yRoot;
+        }
+        else if (this.rank[xRoot] > this.rank[yRoot]) {
+            this.parent[yRoot] = xRoot;
+        }
+        else {
+            this.rank[yRoot]++;
+            this.parent[xRoot] = yRoot;
+        }
+        this.size--;
+        return true;
+    }
+}
 ```
 
