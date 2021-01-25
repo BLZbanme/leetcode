@@ -1,26 +1,44 @@
-#### 问题描述
+# 7.Reverse Integer
 
-​	Given a 32-bit signed integer, reverse digits of an integer.
+Given a signed 32-bit integer `x`, return `x` *with its digits reversed*. If reversing `x` causes the value to go outside the signed 32-bit integer range `[-231, 231 - 1]`, then return `0`.
 
-#### Example
+**Assume the environment does not allow you to store 64-bit integers (signed or unsigned).**
+
+ 
+
+**Example 1:**
 
 ```
-Input: 123
+Input: x = 123
 Output: 321
 ```
 
+**Example 2:**
+
 ```
-Input: -123
+Input: x = -123
 Output: -321
 ```
 
+**Example 3:**
+
 ```
-Input: 120
+Input: x = 120
 Output: 21
 ```
 
-**Note:**
-Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2<sup >31</sup >,  2<sup >31</sup > − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+**Example 4:**
+
+```
+Input: x = 0
+Output: 0
+```
+
+ 
+
+**Constraints:**
+
+- `-231 <= x <= 231 - 1`
 
 #### 我的解决方法	
 
@@ -49,5 +67,27 @@ var reverse = function(x) {
     }
     return num;
 };
+```
+
+#### 2021.01.25
+
+##### redo
+
+注意正负数 取整的区别！
+
+```typescript
+function reverse(x: number): number {
+    const max = Math.floor((2 ** 31 - 1) / 10);
+    const min = Math.ceil((-(2 ** 31)) / 10);
+    let res = 0;
+    while (x != 0) {
+        let tmp = x % 10;
+        x = x >= 0 ? Math.floor(x / 10) : Math.ceil(x / 10);
+        if (res > max || (res === max && tmp > 7)) return 0;
+        if (res < min || (res === min && tmp < -8)) return 0;
+        res = res * 10 + tmp;
+    }
+    return res;
+}
 ```
 
