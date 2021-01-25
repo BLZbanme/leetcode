@@ -27,10 +27,10 @@ Output: 1
 跟傻逼似的写并查集魔怔了= = 
 
 ```javascript
-function numEquivDominoPairs1(dominoes: number[][]): number {
+function numEquivDominoPairs(dominoes: number[][]): number {
     const n = dominoes.length;
     const tmpArr = [];
-    const uf = new UnionFind1128(n);
+    const uf = new UnionFind(n);
     for (let i = 0; i < n; i++) {
         for (let j = i + 1; j < n; j++) {
             if((dominoes[i][0] === dominoes[j][0] && dominoes[i][1] === dominoes[j][1])
@@ -47,7 +47,7 @@ function numEquivDominoPairs1(dominoes: number[][]): number {
     return uf.setNum();
 };
 
-class UnionFind1128 {
+class UnionFind {
     parent: Array<number>
     num: number = 0
     size: Array<number>
