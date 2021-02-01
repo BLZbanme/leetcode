@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Definition for a binary tree node.
  * class TreeNode {
@@ -12,14 +13,11 @@
  * }
  */
 function levelOrderBottom(root) {
-    if (!root) {
-        return [];
-    }
     var result = [];
     var queue = [root];
     while (queue.length) {
         var length_1 = queue.length;
-        result.unshift(queue.map(function (e) { return e && e.val; }));
+        result.unshift(queue.map(function (e) { return e.val; }));
         while (length_1--) {
             var cur = queue.shift();
             if (cur && cur.left) {

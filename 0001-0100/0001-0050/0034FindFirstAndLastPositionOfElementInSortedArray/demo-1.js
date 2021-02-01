@@ -1,3 +1,4 @@
+"use strict";
 function searchRange(nums, target) {
     if (!nums.length) {
         return [-1, -1];

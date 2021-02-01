@@ -1,3 +1,4 @@
+"use strict";
 function longestMountain1(A) {
     var N = A.length;
     var dp = Array(N);

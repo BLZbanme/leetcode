@@ -1,3 +1,4 @@
+"use strict";
 function matrixScore(A) {
     var M = A.length;
     var N = A[0].length;

@@ -1,3 +1,4 @@
+"use strict";
 function lemonadeChange(bills) {
     var map = new Map([[5, 0], [10, 0]]);
     for (var _i = 0, bills_1 = bills; _i < bills_1.length; _i++) {

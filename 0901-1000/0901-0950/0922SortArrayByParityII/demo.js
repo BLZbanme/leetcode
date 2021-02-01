@@ -1,3 +1,4 @@
+"use strict";
 function sortArrayByParityII(A) {
     var _a;
     var N = A.length;

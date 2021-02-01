@@ -1,3 +1,4 @@
+"use strict";
 function reconstructQueue(people) {
     people.sort(function (a, b) {
         return a[0] - b[0] || b[1] - a[1];

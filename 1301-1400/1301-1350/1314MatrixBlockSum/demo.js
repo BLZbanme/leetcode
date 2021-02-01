@@ -1,3 +1,4 @@
+"use strict";
 function matrixBlockSum(mat, K) {
     var m = mat.length;
     var n = mat[0].length;

@@ -1,4 +1,5 @@
-function numEquivDominoPairs(dominoes) {
+"use strict";
+function numEquivDominoPairs1(dominoes) {
     var n = dominoes.length;
     var tmpArr = [];
     var uf = new UnionFind1128(n);
@@ -53,5 +54,16 @@ var UnionFind1128 = /** @class */ (function () {
 }());
 function Cm2(m) {
     return m * (m - 1) / 2;
+}
+function numEquivDominoPairs(dominoes) {
+    var num = Array(100).fill(0);
+    var ret = 0;
+    for (var _i = 0, dominoes_1 = dominoes; _i < dominoes_1.length; _i++) {
+        var domino = dominoes_1[_i];
+        var val = domino[0] < domino[1] ? domino[0] * 10 + domino[1] : domino[1] * 10 + domino[0];
+        ret += num[val];
+        num[val]++;
+    }
+    return ret;
 }
 console.log(numEquivDominoPairs([[1, 2], [2, 1], [3, 4], [5, 6]])); // 1

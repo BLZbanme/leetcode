@@ -1,3 +1,4 @@
+"use strict";
 function binaryTreePaths(root) {
     var result = [];
     if (!root) {

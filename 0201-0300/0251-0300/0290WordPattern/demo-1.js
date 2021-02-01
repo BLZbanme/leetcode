@@ -1,3 +1,4 @@
+"use strict";
 function wordPattern(pattern, s) {
     var arr = s.split(' ');
     var M = pattern.length;

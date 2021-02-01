@@ -1,37 +1,33 @@
-/**
- * @param {string} s
- * @return {number}
- */
-var countSubstrings = function(s) {
-    let count = s.length;
-
-    const checkSubStr = (index) => {
-        for (let i = 2; index + i <= s.length; i++) {
-            let tmp = s.substr(index, i);
-            if (isPalindromic(tmp)) {
-                count++;
+"use strict";
+var countSubstrings = function (s) {
+    var n = s.length;
+    var count = n;
+    var dp = Array(n);
+    for (var i = 0; i < n; i++) {
+        dp[i] = Array(n).fill(false);
+        dp[i][i] = true;
+    }
+    for (var j = 1; j < n; j++) {
+        for (var i = 0; i + j < n; i++) {
+            if (s[i] === s[i + j]) {
+                dp[i][i + j] = j === 1 || dp[i + 1][i + j - 1];
             }
+            dp[i][i + j] && count++;
         }
     }
-
-    for (let i = 0; i < s.length; i++) {
-        checkSubStr(i);
-    }
-
     return count;
 };
-
-function isPalindromic(subStr) {
-    let lo = 0;
-    let hi = subStr.length - 1;
-    while (lo < hi) {
-        if (subStr[lo++] !== subStr[hi--]) {
-            return false;
+var countSubstrings111 = function (s) {
+    var N = s.length;
+    var count = 0;
+    for (var i = 0; i < 2 * N - 1; i++) {
+        var l = i >> 1;
+        var r = (i >> 1) + i % 2;
+        while (l >= 0 && r < N && s[l] === s[r]) {
+            l--;
+            r++;
+            count++;
         }
     }
-    return true;
-}
-
-console.log(countSubstrings('abc')); //3
-
-console.log(countSubstrings('aaa')); //6
+    return count;
+};

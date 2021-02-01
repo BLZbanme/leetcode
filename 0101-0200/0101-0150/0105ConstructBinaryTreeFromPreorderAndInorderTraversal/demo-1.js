@@ -1,4 +1,5 @@
-function buildTree(preorder, inorder) {
+"use strict";
+function buildTree1(preorder, inorder) {
     if (!preorder || !preorder.length)
         return null;
     var helper = function (preLeft, preRight, inLeft, inRight) {
@@ -25,5 +26,29 @@ var TreeNode = /** @class */ (function () {
     }
     return TreeNode;
 }());
+function buildTree(preorder, inorder) {
+    if (!preorder || !preorder.length)
+        return null;
+    var root = new TreeNode(preorder[0]);
+    var stack = [root];
+    var inorderIndex = 0;
+    for (var i = 1; i < preorder.length; i++) {
+        var preorderVal = preorder[i];
+        var node = stack[stack.length - 1];
+        if (node.val !== inorder[inorderIndex]) {
+            node.left = new TreeNode(preorderVal);
+            stack.push(node.left);
+        }
+        else {
+            while (stack.length && stack[stack.length - 1].val === inorder[inorderIndex]) {
+                node = stack.pop();
+                inorderIndex++;
+            }
+            node.right = new TreeNode(preorderVal);
+            stack.push(node.right);
+        }
+    }
+    return root;
+}
 console.log(buildTree([1, 2, 3], [3, 2, 1])); //
 console.log(buildTree([1, 2], [2, 1]));

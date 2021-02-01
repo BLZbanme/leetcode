@@ -1,3 +1,4 @@
+"use strict";
 function relativeSortArray(arr1, arr2) {
     var map = new Map();
     var set = new Set(arr2);
@@ -12,8 +13,8 @@ function relativeSortArray(arr1, arr2) {
     }
     var result = [];
     for (var i = 0; i < arr2.length; i++) {
-        var count = map.get(arr2[i]);
-        result = result.concat(Array(count).fill(arr2[i]));
+        var count_1 = map.get(arr2[i]);
+        result = result.concat(Array(count_1).fill(arr2[i]));
     }
     tail.sort(function (a, b) { return a - b; });
     return result.concat(tail);

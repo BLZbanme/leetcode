@@ -1,52 +1,25 @@
-/**
- * @param {string} moves
- * @return {boolean}
- */
-var judgeCircle = function(moves) {
-    let a = [0, 0];
-    for(let e of moves){
-        switch(e){
-            case "U":
-                a[0] += 1;
+"use strict";
+function judgeCircle(moves) {
+    var i = 0;
+    var j = 0;
+    for (var k = 0; k < moves.length; k++) {
+        switch (moves[k]) {
+            case 'L':
+                i++;
                 break;
-            case "D":
-                a[0] -= 1;
+            case 'R':
+                i--;
                 break;
-            case "L":
-                a[1] += 1;
+            case 'U':
+                j--;
                 break;
-            case "R":
-                a[1] -= 1;
+            case 'D':
+                j++;
                 break;
             default:
                 break;
         }
     }
-    return a[0] == 0 && a[1] == 0;
-};
-
-var judgeCircle = function(moves) {
-    let x = y = 0;
-    for(let e of moves){
-        switch(e){
-            case "U":
-                x += 1;
-                break;
-            case "D":
-                x -= 1;
-                break;
-            case "L":
-                y += 1;
-                break;
-            case "R":
-                y -= 1;
-                break;
-            default:
-                break;
-        }
-    }
-    return x === 0 && y === 0;
-};
-
-judgeCircle("LL")
-judgeCircle("UD")
+    return i === 0 && j === 0;
+}
+;

@@ -1,3 +1,4 @@
+"use strict";
 function countRangeSum1(nums, lower, upper) {
     var N = nums.length;
     var count = 0;

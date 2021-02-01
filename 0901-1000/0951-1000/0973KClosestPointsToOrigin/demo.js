@@ -1,3 +1,4 @@
+"use strict";
 function kClosest(points, K) {
     var result = [];
     var valueArr = [];

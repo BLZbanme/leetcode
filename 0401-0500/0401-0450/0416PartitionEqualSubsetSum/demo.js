@@ -1,3 +1,4 @@
+"use strict";
 function canPartition11(nums) {
     var sum = nums.reduce(function (pre, cur) { return pre + cur; });
     if (sum & 1) {

@@ -1,3 +1,4 @@
+"use strict";
 function allCellsDistOrder(R, C, r0, c0) {
     var map = new Map();
     for (var i = 0; i < R; i++) {

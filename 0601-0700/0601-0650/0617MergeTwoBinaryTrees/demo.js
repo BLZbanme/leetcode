@@ -1,3 +1,4 @@
+"use strict";
 function mergeTrees(t1, t2) {
     if (!t1 && !t2) {
         return null;

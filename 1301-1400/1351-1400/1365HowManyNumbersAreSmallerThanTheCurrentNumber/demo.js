@@ -1,3 +1,4 @@
+"use strict";
 function smallerNumbersThanCurrent(nums) {
     var N = nums.length;
     var map = new Map();

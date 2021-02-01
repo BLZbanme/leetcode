@@ -1,3 +1,4 @@
+"use strict";
 function validSquare(p1, p2, p3, p4) {
     var queue = [p1, p2, p3, p4];
     queue.sort(function (a, b) {

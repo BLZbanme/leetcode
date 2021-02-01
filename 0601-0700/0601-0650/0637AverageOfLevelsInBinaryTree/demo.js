@@ -1,3 +1,4 @@
+"use strict";
 function averageOfLevels(root) {
     var result = [];
     if (!root) {
@@ -6,12 +7,11 @@ function averageOfLevels(root) {
     var queue = [root];
     while (queue.length) {
         var nowLen = queue.length;
-        var aveNow = 0;
-
-        for (let i = 0; i < nowLen; i++) {
+        var now = 0;
+        for (var i = 0; i < nowLen; i++) {
             var cur = queue.shift();
             if (cur) {
-                aveNow += (cur.val / nowLen);
+                now += cur.val;
                 if (cur.left) {
                     queue.push(cur.left);
                 }
@@ -20,7 +20,7 @@ function averageOfLevels(root) {
                 }
             }
         }
-        result.push(aveNow);
+        result.push(now / nowLen);
     }
     return result;
 }

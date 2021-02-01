@@ -1,3 +1,4 @@
+"use strict";
 function findMode(root) {
     var pre = Infinity;
     var count = 0;
@@ -15,7 +16,6 @@ function findMode(root) {
             pre = root.val;
             count = 1;
         }
-        
         if (count == max) {
             result.push(root.val);
         }

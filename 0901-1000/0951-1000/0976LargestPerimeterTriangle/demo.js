@@ -1,3 +1,4 @@
+"use strict";
 function largestPerimeter1(A) {
     var N = A.length;
     A.sort(function (a, b) { return b - a; });

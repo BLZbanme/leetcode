@@ -1,3 +1,4 @@
+"use strict";
 function permutation(S) {
     var strArr = S.split("");
     var N = S.length;
@@ -13,7 +14,7 @@ function permutation(S) {
             arr.push(strArr[i]);
             strArr[i] = '';
             dfs(arr);
-            strArr[i] = arr.pop();
+            strArr[i] = arr.pop() || "";
         }
     };
     dfs(tmp);

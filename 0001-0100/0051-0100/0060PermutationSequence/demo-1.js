@@ -1,3 +1,4 @@
+"use strict";
 function getPermutation111(n, k) {
     var set = new Set();
     var count = 1;
@@ -20,7 +21,7 @@ function getPermutation111(n, k) {
             arr.push(i);
             set.add(i);
             dfs(arr);
-            set["delete"](i);
+            set.delete(i);
             arr.pop();
         }
     };
@@ -29,7 +30,6 @@ function getPermutation111(n, k) {
 }
 ;
 function getPermutation(n, k) {
-    debugger
     var dp = Array(n);
     dp[0] = 1;
     for (var i = 1; i < n; i++) {

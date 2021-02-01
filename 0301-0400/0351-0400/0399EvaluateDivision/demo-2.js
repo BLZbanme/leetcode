@@ -1,3 +1,4 @@
+"use strict";
 function calcEquation(equations, values, queries) {
     var N = equations.length;
     var ufww = new UnionFindWithWeight(2 * N);

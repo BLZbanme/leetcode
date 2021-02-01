@@ -1,3 +1,4 @@
+"use strict";
 function findRotateSteps1(ring, key) {
     var N = ring.length;
     var M = key.length;
@@ -14,17 +15,17 @@ function findRotateSteps1(ring, key) {
     }
     var now = map.get(ring[0]);
     for (var _i = 0, now_1 = now; _i < now_1.length; _i++) {
-        var e = now_1[_i];
+        var e_1 = now_1[_i];
         dp[0].push({
-            index: e,
-            step: Math.min(e, N - e)
+            index: e_1,
+            step: Math.min(e_1, N - e_1)
         });
     }
     for (var i = 1; i < M; i++) {
         var pre = dp[i - 1];
         var now_4 = map.get(key[i]);
         for (var _a = 0, now_2 = now_4; _a < now_2.length; _a++) {
-            var e = now_2[_a];
+            var e_2 = now_2[_a];
             for (var _b = 0, pre_1 = pre; _b < pre_1.length; _b++) {
                 var preItem = pre_1[_b];
                 var theIndex = preItem.index;
@@ -39,7 +40,7 @@ function findRotateSteps1(ring, key) {
                     }
                 }
                 dp[i].push({
-                    index: e,
+                    index: e_2,
                     step: preItem.step + stepDiff
                 });
             }

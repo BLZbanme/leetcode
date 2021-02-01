@@ -1,3 +1,4 @@
+"use strict";
 function removeKdigits(num, k) {
     var stack = [];
     for (var _i = 0, num_1 = num; _i < num_1.length; _i++) {
@@ -17,6 +18,9 @@ function removeKdigits(num, k) {
     while (stack.length) {
         if (stack[0] === 0) {
             stack.shift();
+        }
+        else {
+            break;
         }
     }
     return stack.length ? stack.join('') : '0';

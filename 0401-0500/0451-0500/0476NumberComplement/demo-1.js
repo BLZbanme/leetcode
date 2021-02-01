@@ -1,3 +1,4 @@
+"use strict";
 function findComplement111(num) {
     return parseInt(num.toString(2).split('').map(function (e) { return e == '1' ? '0' : '1'; }).join(''), 2);
 }

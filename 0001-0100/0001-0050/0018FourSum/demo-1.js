@@ -1,3 +1,4 @@
+"use strict";
 function fourSum(nums, target) {
     var result = [];
     var N = nums.length;

@@ -1,3 +1,4 @@
+"use strict";
 var mergeOrderList = function (L1, L2) {
     var fakeHead = new ListNode();
     var cur = fakeHead;

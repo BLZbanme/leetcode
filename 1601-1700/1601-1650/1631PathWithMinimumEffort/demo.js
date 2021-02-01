@@ -1,3 +1,4 @@
+"use strict";
 function minimumEffortPath(heights) {
     var m = heights.length;
     var n = heights[0].length;

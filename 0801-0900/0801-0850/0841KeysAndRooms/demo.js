@@ -1,4 +1,5 @@
-function canVisitAllRooms(rooms) {
+"use strict";
+function canVisitAllRooms11(rooms) {
     var set = new Set([0]);
     var N = rooms.length;
     var dfs = function (index) {
@@ -17,6 +18,24 @@ function canVisitAllRooms(rooms) {
     };
     dfs(0);
     return set.size === N;
+}
+;
+function canVisitAllRooms(rooms) {
+    var N = rooms.length;
+    var visited = Array(N).fill(false);
+    var num = 0;
+    var dfs = function (index) {
+        visited[index] = true;
+        num++;
+        for (var _i = 0, _a = rooms[index]; _i < _a.length; _i++) {
+            var i = _a[_i];
+            if (!visited[i]) {
+                dfs(i);
+            }
+        }
+    };
+    dfs(0);
+    return num === N;
 }
 ;
 console.log(canVisitAllRooms([[1], [2], [3], []])); // true;

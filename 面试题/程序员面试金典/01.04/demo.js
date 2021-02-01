@@ -1,4 +1,5 @@
-function canPermutePalindrome(s) {
+"use strict";
+function canPermutePalindrome11(s) {
     var map = new Map();
     for (var i = 0; i < s.length; i++) {
         var tmp = map.get(s[i]);
@@ -22,6 +23,19 @@ function canPermutePalindrome(s) {
         }
     }
     return true;
+}
+;
+function canPermutePalindrome(s) {
+    var set = new Set();
+    for (var i = 0; i < s.length; i++) {
+        if (set.has(s[i])) {
+            set.delete(s[i]);
+        }
+        else {
+            set.add(s[i]);
+        }
+    }
+    return set.size <= 1;
 }
 ;
 console.log(canPermutePalindrome("tactcoa")); //true

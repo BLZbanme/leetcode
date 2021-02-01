@@ -1,3 +1,4 @@
+"use strict";
 function videoStitching1(clips, T) {
     var maxEnd = 0;
     clips.forEach(function (e) { return maxEnd = Math.max(maxEnd, e[1]); });

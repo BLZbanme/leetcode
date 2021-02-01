@@ -1,3 +1,4 @@
+"use strict";
 function maxSubArray(nums) {
     if (!nums || !nums.length)
         return 0;

@@ -1,3 +1,4 @@
+"use strict";
 function findRedundantDirectedConnection(edges) {
     var N = edges.length;
     var uf = new UnionFind(N + 1);

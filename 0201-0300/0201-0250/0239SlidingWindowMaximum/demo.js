@@ -1,3 +1,4 @@
+"use strict";
 function maxSlidingWindow(nums, k) {
     var result = [];
     var queue = [];

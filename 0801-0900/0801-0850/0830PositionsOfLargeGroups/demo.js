@@ -1,3 +1,4 @@
+"use strict";
 function largeGroupPositions(s) {
     var result = [];
     var N = s.length;

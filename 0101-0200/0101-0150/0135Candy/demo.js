@@ -1,3 +1,4 @@
+"use strict";
 function candy(ratings) {
     if (ratings.length === 1)
         return 1;

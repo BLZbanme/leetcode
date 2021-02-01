@@ -1,3 +1,4 @@
+"use strict";
 function uniquePaths(m, n) {
     var dp = Array(n + 1).fill(0);
     dp[0] = 1;

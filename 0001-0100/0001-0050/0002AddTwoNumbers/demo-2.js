@@ -1,3 +1,4 @@
+"use strict";
 function addTwoNumbers(l1, l2) {
     var fakeHead = new ListNode();
     var cur = fakeHead;
@@ -8,7 +9,6 @@ function addTwoNumbers(l1, l2) {
         l1 && (l1 = l1.next);
         l2 && (l2 = l2.next);
         var tmp = a_1 + b_1 + pre;
-        debugger
         pre = Math.floor(tmp / 10);
         cur.next = new ListNode(tmp % 10);
         cur = cur.next;

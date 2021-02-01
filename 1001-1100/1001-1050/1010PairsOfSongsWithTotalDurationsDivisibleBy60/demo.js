@@ -1,3 +1,4 @@
+"use strict";
 function numPairsDivisibleBy60(time) {
     var map = Array(60).fill(0);
     time.forEach(function (e) { return map[e % 60]++; });
