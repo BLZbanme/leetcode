@@ -1,3 +1,4 @@
+"use strict";
 function minimumOperations(leaves) {
     var N = leaves.length;
     var dp = Array(N);

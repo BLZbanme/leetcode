@@ -1,3 +1,4 @@
+"use strict";
 /**
  Do not return anything, modify nums in-place instead.
  */
@@ -26,7 +27,7 @@ function nextPermutation(nums) {
             i++;
         }
     }
-    return nums;
+    return;
 }
 ;
 function binarySearch(arr, target, lo, hi) {

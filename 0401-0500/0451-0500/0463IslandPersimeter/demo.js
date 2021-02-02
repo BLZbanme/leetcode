@@ -1,3 +1,4 @@
+"use strict";
 function islandPerimeter(grid) {
     if (!grid || !grid.length || !grid[0].length)
         return 0;

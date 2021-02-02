@@ -1,3 +1,4 @@
+"use strict";
 function addToArrayForm1(A, K) {
     var KArr = K.toString().split('').map(function (e) { return +e; });
     var N = Math.max(KArr.length, A.length);
@@ -18,8 +19,7 @@ function addToArrayForm1(A, K) {
 ;
 function addToArrayForm(A, K) {
     var ALen = A.length;
-    var result = Array(ALen);
-    debugger
+    var result = [];
     var flag = K;
     for (var i = 0; i < ALen || flag > 0; i++, flag = Math.floor(flag / 10)) {
         if (i < ALen) {
@@ -31,5 +31,3 @@ function addToArrayForm(A, K) {
     return result;
 }
 ;
-
-console.log(addToArrayForm( [1,2,0,0], 34))

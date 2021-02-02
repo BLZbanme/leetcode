@@ -1,3 +1,4 @@
+"use strict";
 function combinationSum3(k, n) {
     if (n > 45) {
         return [];
@@ -25,4 +26,4 @@ function combinationSum3(k, n) {
 }
 ;
 console.log(combinationSum3(3, 7)); //[[1, 2, 4]]
-console.log(combinationSum3(3, 9)); //[[1, 2, 6], [1, 3, 5], [2, 3, 4]]
+console.log(combinationSum3(3, 9)); //[[1, 2, 6], [1, 3, 4], [2, 3, 4]]

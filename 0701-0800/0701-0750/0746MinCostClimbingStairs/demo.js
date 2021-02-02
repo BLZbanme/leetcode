@@ -1,3 +1,4 @@
+"use strict";
 function minCostClimbingStairs(cost) {
     var p = cost[0];
     var q = cost[1];

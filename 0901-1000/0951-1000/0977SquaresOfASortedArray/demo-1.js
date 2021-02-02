@@ -1,8 +1,9 @@
+"use strict";
 function sortedSquares1(A) {
     return A.sort(function (a, b) { return Math.abs(a) - Math.abs(b); }).map(function (e) { return Math.pow(e, 2); });
 }
 ;
-function sortedSquares(A) {
+function sortedSquares2(A) {
     var N = A.length;
     var i = 0;
     var j = N - 1;
@@ -10,6 +11,24 @@ function sortedSquares(A) {
     var result = [];
     while (i <= j) {
         if (A[j] >= A[i]) {
+            result.unshift(Math.pow(A[j], 2));
+            j--;
+        }
+        else {
+            result.unshift(Math.pow(A[i], 2));
+            i++;
+        }
+    }
+    return result;
+}
+;
+function sortedSquares(A) {
+    var N = A.length;
+    var i = 0;
+    var j = N - 1;
+    var result = [];
+    while (i <= j) {
+        if (Math.pow(A[j], 2) >= Math.pow(A[i], 2)) {
             result.unshift(Math.pow(A[j], 2));
             j--;
         }

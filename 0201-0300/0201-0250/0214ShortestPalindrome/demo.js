@@ -1,3 +1,4 @@
+"use strict";
 function shortestPalindrome11(s) {
     if (!s) {
         return '';
@@ -36,7 +37,6 @@ function shortestPalindrome11(s) {
     return res;
 }
 ;
-
 function shortestPalindrome(s) {
     var N = s.length;
     for (var i = N; i >= 0; i--) {

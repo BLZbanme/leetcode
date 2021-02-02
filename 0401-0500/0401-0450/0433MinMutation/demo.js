@@ -1,3 +1,4 @@
+"use strict";
 function minMutation(start, end, bank) {
     var n = start.length;
     var set = new Set(bank);
@@ -20,7 +21,7 @@ function minMutation(start, end, bank) {
                     var newStr = curArr.join('');
                     if (set.has(newStr)) {
                         queue.push(newStr);
-                        set["delete"](newStr);
+                        set.delete(newStr);
                     }
                 }
                 curArr[j] = cur[j];

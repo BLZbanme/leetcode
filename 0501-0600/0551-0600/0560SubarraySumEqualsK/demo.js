@@ -1,3 +1,4 @@
+"use strict";
 function subarraySum(nums, k) {
     var map = new Map();
     var n = nums.length;
@@ -14,4 +15,4 @@ function subarraySum(nums, k) {
 }
 ;
 console.log(subarraySum([1, 1, 1], 2)); // 2
-console.log(subarraySum([1, 2, 3], 3)) // 2
+console.log(subarraySum([1, 2, 3], 3)); // 2

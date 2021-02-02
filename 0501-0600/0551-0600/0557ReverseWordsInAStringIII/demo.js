@@ -1,9 +1,5 @@
-/**
- * @param {string} s
- * @return {string}
- */
-var reverseWords = function(s) {
-    return s.split(" ").map(e => e.split("").reverse().join("")).join(" ");
-};
-
-reverseWords("Let's take LeetCode contest");
+"use strict";
+function reverseWords(s) {
+    return s.split(/\s+/g).map(function (e) { return e.split('').reverse().join(''); }).join(' ');
+}
+;

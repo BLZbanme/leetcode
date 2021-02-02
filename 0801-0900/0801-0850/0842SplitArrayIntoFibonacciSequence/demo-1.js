@@ -1,3 +1,4 @@
+"use strict";
 function splitIntoFibonacci(S) {
     if (!S) {
         return [];

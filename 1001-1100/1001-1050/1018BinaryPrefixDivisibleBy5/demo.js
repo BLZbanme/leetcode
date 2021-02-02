@@ -1,3 +1,4 @@
+"use strict";
 function prefixesDivBy51(A) {
     var N = A.length;
     var result = Array(N);

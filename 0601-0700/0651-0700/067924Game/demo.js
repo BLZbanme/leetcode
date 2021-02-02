@@ -1,3 +1,4 @@
+"use strict";
 function judgePoint24WRONG(nums) {
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
@@ -88,5 +89,4 @@ function judgePoint24(nums) {
     }
     return solve(nums);
 }
-console.log(judgePoint24([1, 3, 4, 6]));
 console.log(judgePoint24([4, 1, 8, 7]));

@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Definition for singly-linked list.
  * class ListNode {

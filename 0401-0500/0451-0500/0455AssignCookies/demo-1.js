@@ -1,3 +1,4 @@
+"use strict";
 function findContentChildren(g, s) {
     g.sort(function (a, b) { return a - b; });
     s.sort(function (a, b) { return a - b; });

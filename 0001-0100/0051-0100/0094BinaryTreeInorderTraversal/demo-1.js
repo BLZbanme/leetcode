@@ -1,3 +1,4 @@
+"use strict";
 function inorderTraversal(root) {
     var result = [];
     var stack = [];

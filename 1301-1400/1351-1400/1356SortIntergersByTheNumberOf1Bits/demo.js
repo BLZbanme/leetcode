@@ -1,5 +1,4 @@
 "use strict";
-exports.__esModule = true;
 function sortByBits1(arr) {
     var map = new Map();
     return arr.sort(function (a, b) { return a - b; }).sort(function (a, b) {

@@ -1,3 +1,4 @@
+"use strict";
 function reverse1(x) {
     if (!x)
         return 0;

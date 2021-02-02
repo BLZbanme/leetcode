@@ -1,6 +1,6 @@
+"use strict";
 function buildTree(inorder, postorder) {
     var helper = function (inLeft, inRight, postLeft, postRight) {
-        debugger
         if (inLeft > inRight || postLeft > postRight) {
             return null;
         }

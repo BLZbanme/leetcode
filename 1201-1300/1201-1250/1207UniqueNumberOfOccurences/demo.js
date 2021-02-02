@@ -1,3 +1,4 @@
+"use strict";
 function uniqueOccurrences(arr) {
     var map = new Map();
     arr.forEach(function (e) {

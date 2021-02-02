@@ -1,8 +1,8 @@
+"use strict";
 function getMinimumDifference(root) {
     var pre = null;
     var min = Infinity;
     var dfs = function (node) {
-        debugger
         if (!node) {
             return;
         }

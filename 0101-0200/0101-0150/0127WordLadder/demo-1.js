@@ -1,3 +1,4 @@
+"use strict";
 function ladderLength(beginWord, endWord, wordList) {
     //队列queue中存储当前步伐所能对应的字符串
     var queue = [beginWord];

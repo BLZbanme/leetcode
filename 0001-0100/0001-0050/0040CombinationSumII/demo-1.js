@@ -1,3 +1,4 @@
+"use strict";
 var __spreadArrays = (this && this.__spreadArrays) || function () {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
     for (var r = Array(s), k = 0, i = 0; i < il; i++)
@@ -13,7 +14,9 @@ function combinationSum2(candidates, target) {
             result.push(__spreadArrays(arr));
             return;
         }
-        debugger
+        if (sum > target) {
+            return;
+        }
         for (var i = index; i < candidates.length; i++) {
             if (i != index && candidates[i] == candidates[i - 1])
                 continue;

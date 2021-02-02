@@ -1,3 +1,4 @@
+"use strict";
 function isIsomorphic(s, t) {
     var map = new Map();
     var set = new Set();

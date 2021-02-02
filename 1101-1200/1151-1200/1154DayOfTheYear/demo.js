@@ -1,3 +1,4 @@
+"use strict";
 function dayOfYear(date) {
     var arr = date.split("-").map(function (e) { return +e; });
     var daysNum = 0;

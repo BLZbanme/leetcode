@@ -1,3 +1,4 @@
+"use strict";
 function sortColors(nums) {
     var _a, _b;
     var N = nums.length;
@@ -17,7 +18,7 @@ function sortColors(nums) {
             i++;
         }
     }
-    return nums;
+    return;
 }
 ;
 console.log(sortColors([2, 0, 2, 1, 1, 0]));

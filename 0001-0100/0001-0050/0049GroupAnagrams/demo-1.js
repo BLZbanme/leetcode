@@ -1,5 +1,4 @@
 "use strict";
-exports.__esModule = true;
 function groupAnagrams(strs) {
     var map = new Map();
     var aCode = 'a'.charCodeAt(0);

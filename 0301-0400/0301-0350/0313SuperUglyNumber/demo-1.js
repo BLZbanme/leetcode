@@ -1,3 +1,4 @@
+"use strict";
 function nthSuperUglyNumber(n, primes) {
     var N = primes.length;
     var arr = Array(N).fill(0);

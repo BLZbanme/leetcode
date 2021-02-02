@@ -1,3 +1,4 @@
+"use strict";
 function isLongPressedName1(name, typed) {
     var queue1 = [];
     var queue2 = [];
@@ -48,7 +49,6 @@ function isLongPressedName(name, typed) {
     }
     return i === name.length;
 }
-
 console.log(isLongPressedName("alex", "aaleex")); //true
 console.log(isLongPressedName("sawwd", "ssaaedd")); //false
 console.log(isLongPressedName("leelee", "lleeelee")); //true

@@ -1,3 +1,4 @@
+"use strict";
 function countPrimes1(n) {
     var arr = Array(n).fill(false);
     arr[0] = true;

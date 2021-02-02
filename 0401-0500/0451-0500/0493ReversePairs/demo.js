@@ -1,3 +1,4 @@
+"use strict";
 function reversePairs(nums) {
     var count = 0;
     function helper(lo, hi) {

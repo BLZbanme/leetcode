@@ -1,3 +1,4 @@
+"use strict";
 function exist(board, word) {
     var M = board.length;
     var N = board[0].length;

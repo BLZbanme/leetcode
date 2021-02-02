@@ -1,3 +1,4 @@
+"use strict";
 function findTheDifference1(s, t) {
     var map = Array(26).fill(0);
     var aCode = 'a'.charCodeAt(0);

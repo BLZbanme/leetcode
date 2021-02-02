@@ -1,3 +1,4 @@
+"use strict";
 function partitionLabels(S) {
     var result = [];
     var arr = Array(26).fill(-1);
@@ -21,6 +22,5 @@ function partitionLabels(S) {
     }
     return result;
 }
-;
 console.log(partitionLabels("ababcbacadefegdehijhklij")); //[9, 7, 8]
 console.log(partitionLabels("abc")); //[1, 1, 1]

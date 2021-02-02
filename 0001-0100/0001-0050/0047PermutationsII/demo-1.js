@@ -1,3 +1,4 @@
+"use strict";
 function permuteUnique(nums) {
     var result = [];
     var set = new Set();
@@ -10,7 +11,6 @@ function permuteUnique(nums) {
             return;
         }
         for (var i = 0; i < N; i++) {
-            debugger
             if ((i !== index && nums[i] == nums[i - 1] && !set.has(i - 1)) || set.has(i)) {
                 continue;
             }
@@ -18,7 +18,7 @@ function permuteUnique(nums) {
             arr.push(nums[i]);
             dfs(i + 1);
             arr.pop();
-            set["delete"](i);
+            set.delete(i);
         }
     };
     dfs(0);
@@ -26,4 +26,3 @@ function permuteUnique(nums) {
 }
 ;
 console.log(permuteUnique([1, 1, 2]));
-console.log(permuteUnique([3,3,0,3]));

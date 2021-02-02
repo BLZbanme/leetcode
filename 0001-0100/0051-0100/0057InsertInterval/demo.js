@@ -1,3 +1,4 @@
+"use strict";
 function insert1(intervals, newInterval) {
     var N = intervals.length;
     var lo = 0;

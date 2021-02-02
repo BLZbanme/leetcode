@@ -1,3 +1,4 @@
+"use strict";
 function predictPartyVictory1(senate) {
     var helper = function (str) {
         var rQueue = [];

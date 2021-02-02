@@ -1,3 +1,4 @@
+"use strict";
 function maxProfit1(prices) {
     var sold = 0;
     var hold = -prices[0];
@@ -15,7 +16,6 @@ function maxProfit(prices) {
     }
     return ans;
 }
-
-console.log(maxProfit([1, 2, 3, 4, 5])); // 4
 console.log(maxProfit([7, 1, 5, 3, 6, 4])); // 7
+console.log(maxProfit([1, 2, 3, 4, 5])); // 4
 console.log(maxProfit([7, 6, 4, 3, 1])); // 0

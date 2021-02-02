@@ -1,3 +1,4 @@
+"use strict";
 var __spreadArrays = (this && this.__spreadArrays) || function () {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
     for (var r = Array(s), k = 0, i = 0; i < il; i++)
@@ -7,13 +8,14 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 };
 function findSubsequences(nums) {
     var result = [];
+    var set = new Set();
     var helper = function (arr, index) {
-        var set = new Set();
+        var set1 = new Set();
         for (var i = index + 1; i < nums.length; i++) {
-            if (set.has(nums[i])) {
+            if (set1.has(nums[i])) {
                 continue;
             }
-            set.add(nums[i]);
+            set1.add(nums[i]);
             if (arr[arr.length - 1] <= nums[i]) {
                 arr.push(nums[i]);
                 result.push(__spreadArrays(arr));
@@ -22,7 +24,12 @@ function findSubsequences(nums) {
             }
         }
     };
-    helper([], 0);
+    for (var i = 0; i < nums.length; i++) {
+        if (!set.has(nums[i])) {
+            helper([nums[i]], i);
+            set.add(nums[i]);
+        }
+    }
     return result;
 }
 ;

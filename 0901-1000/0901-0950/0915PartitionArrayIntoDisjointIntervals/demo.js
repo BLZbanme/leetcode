@@ -1,4 +1,5 @@
-function partitionDisjoint(A) {
+"use strict";
+function partitionDisjoint1(A) {
     var N = A.length;
     var dp = Array(N);
     dp[0] = A[0];
@@ -16,6 +17,21 @@ function partitionDisjoint(A) {
     return result;
 }
 ;
+function partitionDisjoint(A) {
+    var N = A.length;
+    var max = A[0];
+    var leftMax = A[0];
+    var pos = 0;
+    for (var i = 0; i < N; i++) {
+        max = Math.max(max, A[i]);
+        if (A[i] >= leftMax) {
+            continue;
+        }
+        leftMax = max;
+        pos = i;
+    }
+    return pos + 1;
+}
 console.log(partitionDisjoint([5, 0, 3, 8, 6])); // 3
 console.log(partitionDisjoint([1, 1, 1, 0, 6, 12])); // 4
 console.log(partitionDisjoint([6, 0, 8, 30, 37, 6, 75, 98, 39, 90, 63, 74, 52, 92, 64])); // 2

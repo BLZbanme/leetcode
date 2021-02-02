@@ -1,3 +1,4 @@
+"use strict";
 function pivotIndex1(nums) {
     var n = nums.length;
     var lo = 0;
@@ -19,6 +20,8 @@ function pivotIndex1(nums) {
 ;
 function pivotIndex(nums) {
     var n = nums.length;
+    if (!n)
+        return -1;
     var sum = nums.reduce(function (pre, cur) { return pre + cur; });
     var tmp = 0;
     for (var i = 0; i < n; i++) {
