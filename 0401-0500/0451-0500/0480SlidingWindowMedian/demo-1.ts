@@ -1,6 +1,6 @@
 function medianSlidingWindow(nums: number[], k: number): number[] {
-    const small = new PriorityQueue(true);
-    const big = new PriorityQueue(false);
+    const small = new PriorityQueue(false);
+    const big = new PriorityQueue(true);
 
     const getMid = (): number => {
         if (k & 1) return small.queue[1];
@@ -44,12 +44,12 @@ function medianSlidingWindow(nums: number[], k: number): number[] {
             small.insert(big.pop());
         }
 
-        while (small && map.get(small.queue[1])) {
+        while (small.size && map.get(small.queue[1])) {
             map.set(small.queue[1], map.get(small.queue[1]) - 1);
             small.pop();
         }
 
-        while (big && map.get(big.queue[1])) {
+        while (big.size && map.get(big.queue[1])) {
             map.set(big.queue[1], map.get(big.queue[1]) - 1);
             big.pop();
         }

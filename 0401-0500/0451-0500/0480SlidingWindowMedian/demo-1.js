@@ -1,6 +1,6 @@
 function medianSlidingWindow(nums, k) {
-    var small = new PriorityQueue(true);
-    var big = new PriorityQueue(false);
+    var small = new PriorityQueue(false);
+    var big = new PriorityQueue(true);
     var getMid = function () {
         if (k & 1)
             return small.queue[1];
@@ -14,6 +14,7 @@ function medianSlidingWindow(nums, k) {
     }
     var result = [getMid()];
     var map = new Map();
+    debugger
     for (var i = k; i < nums.length; i++) {
         var balance = 0;
         var left = nums[i - k];
@@ -38,11 +39,11 @@ function medianSlidingWindow(nums, k) {
         if (balance < 0) {
             small.insert(big.pop());
         }
-        while (small && map.get(small.queue[1])) {
+        while (small.size && map.get(small.queue[1])) {
             map.set(small.queue[1], map.get(small.queue[1]) - 1);
             small.pop();
         }
-        while (big && map.get(big.queue[1])) {
+        while (big.size && map.get(big.queue[1])) {
             map.set(big.queue[1], map.get(big.queue[1]) - 1);
             big.pop();
         }
@@ -97,7 +98,8 @@ var PriorityQueue = /** @class */ (function () {
     };
     return PriorityQueue;
 }());
+
+console.log(medianSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3)); //[1,-1,-1,3,5,6]
 console.log(medianSlidingWindow([1, 2], 2)); //[1.5]
 console.log(medianSlidingWindow([1], 1)); //[1]
-console.log(medianSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3)); //[1,-1,-1,3,5,6]
 console.log(medianSlidingWindow([1, 4, 2, 3], 4)); //[2.5]
