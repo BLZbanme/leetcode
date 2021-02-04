@@ -24,10 +24,7 @@ function subarraysWithKDistinct(A, K) {
         var result = 0;
         for (var right = 0; right < n; right++) {
             map.set(A[right], (map.get(A[right]) || 0) + 1);
-            if (map.size <= k) {
-                result += right - left + 1;
-            }
-            else {
+            while (map.size > k && left <= right) {
                 var tmp = map.get(A[left]);
                 if (tmp > 1) {
                     map.set(A[left], tmp - 1);
@@ -37,11 +34,12 @@ function subarraysWithKDistinct(A, K) {
                 }
                 left++;
             }
+            result += right - left + 1;
         }
         return result;
     };
-    debugger
     return helper(K) - helper(K - 1);
 }
 ;
 console.log(subarraysWithKDistinct([1, 2, 1, 2, 3], 2)); //7
+console.log(subarraysWithKDistinct([1,2,1,3,4], 3))//3
