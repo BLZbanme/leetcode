@@ -1,80 +1,26 @@
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var lengthOfLIS = function(nums) {
-    const N = nums.length;
-    if (!N) {
-        return 0;
-    }
-    let dp = new Array(N);
+function lengthOfLIS(nums) {
+    var n = nums.length;
+    if (n < 2)
+        return n;
+    var dp = Array(n).fill(1);
     dp[0] = 1;
-    let result = 1;
-    for (let i = 1; i < N; i++) {
-        let tmp = 1;
-        for (let j = i - 1; j >= 0; j--) {
+    var max = 1;
+    debugger
+    for (var i = 1; i < n; i++) {
+        for (var j = i - 1; j >= 0; j--) {
             if (nums[i] > nums[j]) {
-                tmp = Math.max(tmp, dp[j] + 1);
-            }
-            if (tmp > result) {
-                break;
+                dp[i] = Math.max(1 + dp[j], dp[i]);
             }
         }
-        dp[i] = tmp;
-        result = Math.max(result, tmp);
+        max = Math.max(dp[i], max);
     }
-    return result;
-};
-
-var lengthOfLIS = function(nums) {
-    const N = nums.length;
-    let tails = new Array(N);
-    let size = 0;
-    for (let x of nums) {
-        let i = 0;
-        let j = size;
-        while (i !== j) {
-            let m = Math.floor((i + j) / 2);
-            if (tails[m] < x) {
-                i = m + 1;
-            }
-            else {
-                j = m;
-            }
-        }
-        tails[i] = x;
-        if (i === size) {
-            size++;
-        }
-    }
-    return size;
+    return max;
 }
+;
 
-var lengthOfLIS = function(nums) {
-    const N = nums.length;
-    let dp = new Array(N);
-    let len = 0;
-    for (let num of nums) {
-        let i = 0;
-        let j = len;
-        while (i !== j) {
-            let m = Math.floor((i + j) / 2);
-            if (dp[m] < num) {
-                i = m + 1;
-            }
-            else {
-                j = m;
-            }
-        }
-        dp[i] = num;
-        if (i === len) {
-            len++;
-        } 
-    }
-    return len;
-}
+console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18])); //4
 
+console.log(lengthOfLIS([4, 10, 4, 3, 8, 9])); //3
 
-
-
-console.log(lengthOfLIS([10,9,2,5,3,7,101,18]))
+console.log(lengthOfLIS([0, 1, 0, 3, 2, 3])); //4
+console.log(lengthOfLIS([7, 7, 7, 7, 7, 7, 7])); //1

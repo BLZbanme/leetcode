@@ -82,3 +82,60 @@ var lengthOfLIS = function(nums) {
     return len;
 }
 ```
+
+#### 2021.02.06
+
+##### redo
+
+垃圾dp
+
+```typescript
+function lengthOfLIS(nums: number[]): number {
+    const n = nums.length;
+    if (n < 2) return n;
+    const dp = Array(n).fill(1);
+    let max = 1;
+    for (let i = 1; i < n; i++) {
+        for (let j = i - 1; j >= 0; j--) {
+            if (nums[i] > nums[j]) {
+                dp[i] = Math.max(1 + dp[j], dp[i]);
+            }
+        }
+        max = Math.max(dp[i], max);
+    }
+    return max;
+};
+```
+
+nb的dp
+
+```typescript
+function lengthOfLIS(nums: number[]): number {
+    const n = nums.length;
+    if (n < 2) return n;
+    let len = 1;
+    const dp = Array(n + 1);
+    dp[1] = nums[0];
+    for (let i = 1; i < n; i++) {
+        if (nums[i] > dp[len]) {
+            dp[++len] = nums[i];
+        }
+        else {
+            let lo = 1;
+            let hi = len;
+            while (lo <= hi) {
+                let mid = lo + ((hi - lo) >> 1);
+                if (dp[mid] < nums[i]) {
+                    lo = mid + 1;
+                }
+                else {
+                    hi = mid - 1;
+                }
+            }
+            dp[lo] = nums[i];
+        }
+    }
+    return len;
+};
+```
+
