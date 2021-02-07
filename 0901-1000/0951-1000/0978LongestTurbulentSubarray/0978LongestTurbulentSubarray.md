@@ -67,7 +67,12 @@ Output: 1
 
 #### 	我的思路：
 
-dp
+##### dp：
+
+1. add[i]表示以i下标结尾的，当前趋势为增的子数组长度
+2. diff[i]表示以i下标结尾的，当前趋势为减的子数组长度
+3. 遍历一遍数组，根据arr[i]和arr[i -1]的大小关系来修改add[i]和diff[i]；
+4. 遍历过程中记录最大值为所求结果
 
 ```javascript
 function maxTurbulenceSize1(arr: number[]): number {
@@ -125,6 +130,14 @@ function maxTurbulenceSize(arr: number[]): number {
 #### 2021.02.08
 
 ##### redo
+
+滑动窗口
+
+1. cp表示当前arr[i]和arr[i - 1]的关系
+2. 当```cp * compare(arr[right - 1], arr[right]) === 1```时，表示当前滑动窗口中为湍流数组，记录窗口长度
+3. 当```cp * compare(arr[right - 1], arr[right]) !== 1```时，表示当前滑动窗口中不是湍流数组，因为此次遍历中，是由于```arr[right-1]和arr[right]```的关系，导致湍流数组不成立，所以此时直接把left置为right - 1
+4. 每次遍历的过程中，把cp改成当前的大小关系
+5. 整个过程中，记录最长的窗口长度就是题解
 
 ```typescript
 function maxTurbulenceSize(arr: number[]): number {
