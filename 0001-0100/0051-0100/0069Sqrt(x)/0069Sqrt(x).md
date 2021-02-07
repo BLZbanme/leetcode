@@ -77,3 +77,28 @@ var mySqrt = function(x) {
 };
 ```
 
+#### 2021.02.07
+
+##### redo
+
+```typescript
+function mySqrt(x: number): number {
+    let lo = 0;
+    let hi = x;
+    while (lo < hi) {
+        let mid = lo + ((hi - lo) >> 1) + 1;
+        let cur = mid * mid;
+        if (cur === x) {
+            return mid;
+        }
+        else if (cur < x) {
+            lo = mid;
+        }
+        else {
+            hi = mid - 1;
+        }
+    }
+    return lo;
+};
+```
+
