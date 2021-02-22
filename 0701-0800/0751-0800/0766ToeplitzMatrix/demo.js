@@ -8,6 +8,5 @@ var isToeplitzMatrix = function(matrix) {
             }
         }
     }
-
     return true;
-};
+}
