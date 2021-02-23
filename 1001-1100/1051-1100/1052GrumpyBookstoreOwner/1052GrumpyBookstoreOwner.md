@@ -55,24 +55,28 @@ function maxSatisfied1(customers: number[], grumpy: number[], X: number): number
 
 ##### 别人的思路：
 
-一次遍历的滑动窗口
+一次遍历的滑动窗口。
+
+1. max计算的是在长度为X的滑动窗口中，生气时的客人的最大值max。
+2. res就是计算所有处于正常状态的客人数量。
+3. ```max+res```就是结果
 
 ```typescript
-function maxSatisfied(customers: number[], grumpy: number[], X: number): number {
-    let result = 0;
+var maxSatisfied = (customers, grumpy, X) => {
+    let res = 0;
     let max = 0;
     let tmp = 0;
     let left = 0;
     for (let right = 0; right < customers.length; right++) {
-        result += grumpy[right] ? 0 : customers[right];
-        tmp += grumpy[right] && customers[right];
+        grumpy[right] || (res += customers[right]);
+        grumpy[right] && (tmp += customers[right]);
         if (right - left + 1 > X) {
-            tmp -= grumpy[left] && customers[left];
+            grumpy[left] && (tmp -= customers[left]);
             left++;
         }
         max = Math.max(max, tmp);
     }
-    return result + max;
+    return res + max;
 }
 ```
 
