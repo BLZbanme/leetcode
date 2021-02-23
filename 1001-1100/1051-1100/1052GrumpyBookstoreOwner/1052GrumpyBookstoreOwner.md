@@ -58,21 +58,21 @@ function maxSatisfied1(customers: number[], grumpy: number[], X: number): number
 一次遍历的滑动窗口
 
 ```typescript
-function maxSatisfied(customers: number[], grumpy: number[], X: number): number {
-    let result = 0;
+var maxSatisfied = (customers, grumpy, X) => {
+    let res = 0;
     let max = 0;
     let tmp = 0;
     let left = 0;
     for (let right = 0; right < customers.length; right++) {
-        result += grumpy[right] ? 0 : customers[right];
-        tmp += grumpy[right] && customers[right];
+        grumpy[right] || (res += customers[right]);
+        grumpy[right] && (tmp += customers[right]);
         if (right - left + 1 > X) {
-            tmp -= grumpy[left] && customers[left];
+            grumpy[left] && (tmp -= customers[left]);
             left++;
         }
         max = Math.max(max, tmp);
     }
-    return result + max;
+    return res + max;
 }
 ```
 
