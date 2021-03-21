@@ -1,4 +1,4 @@
-​	Given *n* pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+	Given *n* pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
 ​	For example, given *n* = 3, a solution set is:
 
@@ -90,4 +90,36 @@ function backTrack(arr, str, left, right, max){
 }
 ```
 
-​	
+#### 2021.03.22
+
+##### redo
+
+```javascript
+var generateParenthesis = function(n) {
+
+    const result = [];
+    const arr = [];
+
+    const dfs = (left, right) => {
+        if (left === n && right === n) {
+            result.push(arr.join(''));
+            return;
+        }
+        if (left < n) {
+            arr.push('(');
+            dfs(left + 1, right);
+            arr.pop();
+        }
+        
+        if (right < n && left > right) {
+            arr.push(')');
+            dfs(left, right + 1);
+            arr.pop();
+        }
+    }
+
+    dfs(0, 0);
+    return result;
+};
+```
+
