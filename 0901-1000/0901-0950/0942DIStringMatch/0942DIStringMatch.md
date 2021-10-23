@@ -90,3 +90,29 @@ var diStringMatch = function(S) {
 ```
 
 ##### 	于是，我点开solution，看看高手们都是怎么写的！结果发现跟我写的一样啊！(中间还试了下不用ES6的s[i]用s.charAt(i),没啥作用)。心灰意冷下重新提交了一遍写法3，结果99.78%。坑爹呢leetcode
+
+
+
+#### 2021.10.24
+
+#### redo
+
+没做出来，没想到两年之后人直接傻逼了
+
+```python
+class Solution:
+    def diStringMatch(self, s: str) -> List[int]:
+        N = len(s)
+        min, max = 0, N
+        result = []
+        for c in s:
+            if c == 'D':
+                result.append(max)
+                max -= 1
+            else:
+                result.append(min)
+                min += 1
+        result.append(min)
+        return result
+```
+
