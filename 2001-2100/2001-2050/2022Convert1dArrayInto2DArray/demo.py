@@ -3,7 +3,7 @@ class Solution:
         N = len(original)
         if N != m * n:
             return []
-        dp = [[] * n for _ in range(m)]
+        dp = [[0] * n for _ in range(m)]
         for i in range(N):
             dp[i // n][i % n] = original[i]
         return dp
